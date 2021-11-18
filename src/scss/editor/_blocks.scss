@@ -1,0 +1,15 @@
+
+    .wp-block-columns.grid {
+        flex-flow: row !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        .wp-block-column{
+            &.grid__column{
+                flex-basis: unset;
+            }
+        }
+    }
+
+    .hds-button{
+        display: flex;
+    }

@@ -1,0 +1,28 @@
+.front-page-section {
+
+	&.hero {
+
+		.hds-container {
+			min-height: 0;
+
+			@include breakpoint('m') {
+				padding-top: spacing('layout-m');
+				padding-bottom: spacing('layout-s');
+			}
+
+			@include breakpoint('l') {
+				min-height: 0;
+				padding-top: 4.5rem;
+			}
+
+			@include breakpoint('xl') {
+				min-height: 0;
+				padding-top: spacing('layout-xl');
+			}
+		}
+	}
+
+    &:not(.hero):last-child{
+        padding-bottom: 0;
+    }
+}

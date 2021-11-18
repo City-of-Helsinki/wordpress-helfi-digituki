@@ -1,0 +1,20 @@
+{
+    "name": "city-of-helsinki/digituki",
+    "type": "wordpress-theme",
+    "version": "master",
+    "authors": [],
+    "repositories": [
+          {
+              "type": "vcs",
+              "url": "https://github.com/City-of-Helsinki/wordpress-helfi-hds-wp.git"
+          },
+          {
+              "type": "vcs",
+              "url": "https://github.com/City-of-Helsinki/wordpress-helfi-helsinkiteema.git"
+          }
+      ],
+      "require": {
+          "city-of-helsinki/wordpress-helfi-helsinkiteema": "*",
+          "city-of-helsinki/wordpress-helfi-hds-wp": "*"
+    }
+}

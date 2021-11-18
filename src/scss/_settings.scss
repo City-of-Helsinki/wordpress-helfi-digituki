@@ -1,0 +1,40 @@
+
+/* ===== HEADINGS ===== */
+$digituki-heading-font-sizes: (
+	h1: 52px,
+	h2: 36px,
+	h3: 24px,
+	h4: 20px,
+	h5: 18px,
+	h6: 16px,
+) !default;
+
+$digituki-heading-responsive-font-sizes: (
+	l: (
+        h1: 52px,
+        h2: 36px,
+        h3: 24px,
+        h4: 20px,
+        h5: 18px,
+        h6: 16px,
+	),
+	xs: (
+        h1: 36px,
+        h2: 24px,
+        h3: 20px,
+        h4: 18px,
+        h5: 18px,
+        h6: 16px,
+	),
+) !default;
+
+
+
+$heading-color: $body-color !default;
+$heading-font-family: 'Helsinki Grotesk', 'Helsinki Avoin Sans', Arial, sans-serif !default;
+$heading-font-weight: 600;
+$heading-line-height: 1 !default;
+$heading-letter-spacing: 0 !default;
+$heading-margin-top: var(--spacing-4-xl) !default;
+$heading-margin-bottom: var(--spacing-l) !default;
+$heading-word-wrap: break-word !default;

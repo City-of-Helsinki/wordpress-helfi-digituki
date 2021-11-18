@@ -1,0 +1,29 @@
+.wp-block-columns{
+    &.grid{
+        width: auto;
+    }
+}
+.hds-container{
+    .grid{
+        .wp-block-column{
+            &.grid__column{
+                flex-basis: unset !important;
+                flex-flow: row;
+                margin: 0;
+                &--sidebar{
+                    display: flex;
+                }
+            }
+        }
+    }
+}
+.grid__column{
+    .wp-block-group{
+        &.has-background:not(.button){
+            padding: var(--spacing-4-xl) var(--spacing-layout-s);
+            > h2{
+                margin-top: 0;
+            }
+        }
+    }
+}
