@@ -2,7 +2,8 @@
     const allowedEmbedBlocks = [];
 
     const heading = ['core/heading', {level: 2, placeholder: "Lisää otsikko"}];
-    const group = ['digituki/aside', {}]
+    const group = ['digituki/aside', {}];
+    const banner = ['digituki/banner', {}];
     const generateColumnVariationsIcon = function(d){
         const el = wp.element.createElement;
         const SVG = wp.primitives.SVG;
@@ -85,6 +86,20 @@
             [ 'core/column', { className: 'grid__column l-4' }, [ heading ] ],
             [ 'core/column', { className: 'grid__column l-4' }, [ heading ] ],
             [ 'core/column', { className: 'grid__column l-4' }, [ heading ] ]
+            ],
+            scope: [ 'block' ],
+        },
+        {
+            name: 'hel-grid-column-banner',
+            title: 'Bannerit',
+            icon: generateColumnVariationsIcon('M41 14a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h30a2 2 0 0 0 2-2V14zM28.5 34h-9V14h9v20zm2 0V14H39v20h-8.5zm-13 0H9V14h8.5v20z'),
+            attributes: {
+            className: 'grid grid--banner'
+            },
+            innerBlocks: [
+            [ 'core/column', { className: 'grid__column xl-4 m-12 grid--banner__heading' }, [ heading ] ],
+            [ 'core/column', { className: 'grid__column xl-4 m-6 grid--banner__column' }, [ banner ] ],
+            [ 'core/column', { className: 'grid__column xl-4 m-6 grid--banner__column grid--banner__column--last ' }, [ banner ] ]
             ],
             scope: [ 'block' ],
         }

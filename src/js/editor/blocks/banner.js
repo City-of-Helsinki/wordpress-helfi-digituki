@@ -7,7 +7,32 @@
 
 
 	const ALLOWED_BLOCKS = ['core/paragraph', 'core/heading', 'core/list'];
+	const MY_TEMPLATE = [
+		[ 'core/heading', { placeholder: 'Otsikko' } ]
+	]
+	const BannerIcon = (props) => {
+		const {icon} = props;
+		if (!icon)
+			return (null);
 
+		return (
+			<div class="content__inner content__inner--icon">
+				{ icon }
+			</div>
+		)
+	}
+	const Banner = (props) => {
+		const {icon, content, iconPosition} = props;
+		
+		return(	
+			<div className={`content ${icon ? iconPosition : 'content--no-icon'}`}>
+				<BannerIcon icon={icon} />
+				<div class="content__inner content__inner--text">
+					{content}
+				</div>
+			</div>
+		)
+	}
 	function digitukiIconPositionControl(props){
 		let options = [
 			{label: __("Vierellä"), value: 'content--icon-side'},
@@ -22,12 +47,16 @@
 		}, props);
 	}
 
-	function editBanner() {
-		return function(props) {
-			return createElement(
-				'div', useBlockProps({
-					className: 'wp-block-hds-wp-banner-custom'
-				}),
+	function editBanner(props) {
+        const { attributes, setAttributes } = props
+        const { contentIconPosition } = attributes;
+
+		const blockProps = useBlockProps({ 
+            className: 'wp-block-hds-wp-banner-custom'
+        });
+        return (
+            <div {...blockProps}>
+				{
 				hdsInspectorControls(
 					{
 						title: wp.i18n.__('Content'),
@@ -35,42 +64,33 @@
 					},
 					hdsIconControl(props),
 					digitukiIconPositionControl(props)
-				),
-				createElement('div', useBlockProps(),
-					createElement('div',
-						{ className: `content ${props.attributes.contentIconPosition}`},
-						createElement(
-							'div', {className: 'content__inner content__inner--icon'},
-							hdsContentIcon(props),
-						),
-						createElement( 'div', {className: 'content__inner content__inner--text'}, 
-							createElement( InnerBlocks, {
-								allowedBlocks: ALLOWED_BLOCKS
-							} ) )
-					),				
 				)
-			);
-		}
+				}
+				<Banner 
+					content={<InnerBlocks allowedBlocks={ALLOWED_BLOCKS} template={ MY_TEMPLATE } />} 
+					icon={hdsContentIcon(props)}
+					iconPosition={contentIconPosition ? contentIconPosition : ''}
+				/>
+			</div>
+		)
 	}
 
-	function saveBanner() {
-		return function(props) {
-			return createElement('div', useBlockProps.save({
-				className: 'wp-block-hds-wp-banner-custom'
-			}),
-				createElement('div',
-					{ className: `content ${props.attributes.contentIconPosition}`},
-					createElement(
-						'div', {className: 'content__inner content__inner--icon' },
-						hdsContentIcon(props),
-					),
-					createElement(
-						'div', {className: 'content__inner content__inner--text'},
-						createElement( InnerBlocks.Content )
-					)
-				),
-			);
-		}
+	function saveBanner(props) {
+        const { attributes } = props
+        const { contentIconPosition } = attributes;
+        const blockProps = useBlockProps.save({
+            className: 'wp-block-hds-wp-banner-custom'
+        });
+
+		return (
+			<div {...blockProps}>
+				<Banner 
+					icon={hdsContentIcon(props)}
+					iconPosition={contentIconPosition ? contentIconPosition : ''}
+					content={<InnerBlocks.Content />} 
+				/>
+			</div>
+		)
 	}
 
 	registerBlockType('digituki/banner', {
@@ -91,8 +111,8 @@
 				default: 'content--icon-side',
 			}
 		},
-		edit: editBanner(),
-		save: saveBanner()
+		edit: editBanner,
+		save: saveBanner
 	});
 
 })(window.wp);
