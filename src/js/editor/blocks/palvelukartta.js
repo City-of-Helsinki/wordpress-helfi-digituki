@@ -7,28 +7,21 @@
 	const { TextControl, TextareaControl, PanelBody, PanelRow } = wp.components;
     const { MediaUpload, InspectorControls } = wp.blockEditor;
 
+    const MapInfo = (props) => {
+        const {label} = props;
+        if (!label)
+            return (null);
+
+        return(
+        <div class="mapinfo has-icon has-icon--before">
+            <span class="mapinfo__icon" aria-hidden="true">{hdsInfoIcon()}</span>
+            <span class="mapinfo__text">{label}</span>
+        </div>
+        )
+    }
     function edit(props) {
         const { attributes, setAttributes } = props
-        const { downloadFile, mapUrl, iframeTitle, buttonText, altText } = attributes;
-        
-        const removeFile = () => {
-            setAttributes({
-                downloadFile: ''
-            });
-        }
-
-        const handleRender = ({open}) => {
-            let cb = open;
-            if (downloadFile){
-                return (
-                <div>
-                    <img onClick={open} src={downloadFile} />
-                    <button onClick={removeFile}>Poista kuva</button>
-                </div>
-                )
-            }
-            return (<button onClick={cb}>Lisää kuva</button>)
-        }
+        const { downloadFile, mapUrl, iframeTitle, buttonText, altText, infoText } = attributes;
 
 		const blockProps = useBlockProps({ 
             className: ''
@@ -66,9 +59,17 @@
                             onChange={ ( value ) => setAttributes( {buttonText: value }) }
                         />
                     </PanelRow>
+                    <PanelRow>
+                        <TextControl
+                            label="Opasteteksti"
+                            value={ infoText }
+                            onChange={ ( value ) => setAttributes( {infoText: value }) }
+                        />
+                    </PanelRow>
                     </PanelBody>
                 </InspectorControls>
                 <div {...blockProps}>
+                    <MapInfo label={ infoText} />
                     <div class="mapframe">
                         <iframe title={iframeTitle} src={mapUrl}></iframe>
                     </div>
@@ -80,7 +81,7 @@
 
 	function save(props) {
         const { attributes, setAttributes } = props;
-        const { mapUrl, iframeTitle, buttonText, altText } = attributes;
+        const { mapUrl, iframeTitle, buttonText, altText, infoText } = attributes;
 
         const blockProps = useBlockProps.save({
             className: 'palvelukartta'
@@ -89,6 +90,7 @@
        return (
         <article {...blockProps}>
             <p class="screen-reader-text">{altText}</p>
+            <MapInfo label={ infoText} />
             <div class="mapframe">
                 <iframe title={iframeTitle} src={mapUrl}></iframe>
             </div>
@@ -118,6 +120,9 @@
                 type: 'string'
             },
             altText: {
+                type: 'string'
+            },
+            infoText: {
                 type: 'string'
             }
 		},
