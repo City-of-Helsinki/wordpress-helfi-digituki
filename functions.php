@@ -20,6 +20,11 @@ function digituki_enqueue_styles() {
 		get_stylesheet_directory_uri() . '/assets/style.css',
 		['theme']
 	);
+
+	wp_enqueue_script( 'wordpress-helfi-digituki-script',
+		get_stylesheet_directory_uri() . '/assets/scripts.js',
+		['jquery']
+	);
 }
 add_action( 'wp_enqueue_scripts', 'digituki_enqueue_styles' );
 
