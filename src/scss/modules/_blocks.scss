@@ -18,12 +18,10 @@
     }
 }
 .grid__column{
-    .wp-block-group{
-        &.has-background:not(.button){
-            padding: var(--spacing-4-xl) var(--spacing-layout-s);
-            > h2{
-                margin-top: 0;
-            }
+    .wp-block-group.has-background:not(.button), &.wp-block-digituki-aside > div{
+        padding: var(--spacing-4-xl) var(--spacing-layout-s);
+        > h2{
+            margin-top: 0;
         }
     }
 }

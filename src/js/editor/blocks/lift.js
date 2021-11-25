@@ -9,7 +9,8 @@
                 title: __('Kainalojuttu'),
                 attributes: {
                     className: 'lift',
-                    backgroundColor: 'medium-light'
+                    backgroundColor: 'medium-light',
+                    tagName: 'article'
                 },
                 innerBlocks: [
                     ['core/heading', {level: 2, placeholder: __('Lisää otsikko')}]

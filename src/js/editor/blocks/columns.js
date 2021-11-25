@@ -1,8 +1,16 @@
 (function (wp) {
     const allowedEmbedBlocks = [];
-
     const heading = ['core/heading', {level: 2, placeholder: "Lisää otsikko"}];
     const group = ['digituki/aside', {}]
+
+    const classNames = {
+        'full': 'grid__column xs-12',
+        'main': 'grid__column s-12 l-7 xl-8',
+        'side': 'grid__column grid__column--sidebar s-12 l-5 xl-4',
+        '50': 'grid_column l-6',
+        '33': 'grid_column l-4'
+    }
+
     const generateColumnVariationsIcon = function(d){
         const el = wp.element.createElement;
         const SVG = wp.primitives.SVG;
@@ -31,7 +39,7 @@
             className: 'grid'
             },
             innerBlocks: [
-            [ 'core/column', { className: 'grid__column xs-12' }, [ heading ] ]
+            [ 'core/column', { className: classNames['full'] }, [ heading ] ]
             ],
             scope: [ 'block' ],
         },
@@ -43,8 +51,8 @@
             className: 'grid'
             },
             innerBlocks: [
-            [ 'core/column', { className: 'grid__column l-6' }, [ heading ] ],
-            [ 'core/column', { className: 'grid__column l-6' }, [ heading ] ],
+            [ 'core/column', { className: classNames['50'] }, [ heading ] ],
+            [ 'core/column', { className: classNames['50'] }, [ heading ] ],
             ],
             scope: [ 'block' ],
         },
@@ -56,8 +64,8 @@
             className: 'grid'
             },
             innerBlocks: [
-            [ 'core/column', { className: 'grid__column l-8' }, [ heading ] ],
-            [ 'core/column', { className: 'grid__column l-4 grid__column--sidebar', allowedEmbedBlocks }, [ group ]],
+            [ 'core/column', { className: classNames['main'] }, [ heading ] ],
+            [ 'digituki/aside', { className: classNames['side'] }],
             ],
             scope: [ 'block' ],
         },
@@ -69,8 +77,8 @@
             className: 'grid'
             },
             innerBlocks: [
-            [ 'core/column', { className: 'grid__column l-4 grid__column--sidebar', allowedEmbedBlocks }, [ group ] ],
-            [ 'core/column', { className: 'grid__column l-8' }, [ heading ] ],
+            [ 'core/column', { className: classNames['side'], allowedEmbedBlocks }, [ group ] ],
+            [ 'core/column', { className: classNames['main'] }, [ heading ] ],
             ],
             scope: [ 'block' ],
         },
@@ -82,9 +90,9 @@
             className: 'grid'
             },
             innerBlocks: [
-            [ 'core/column', { className: 'grid__column l-4' }, [ heading ] ],
-            [ 'core/column', { className: 'grid__column l-4' }, [ heading ] ],
-            [ 'core/column', { className: 'grid__column l-4' }, [ heading ] ]
+            [ 'core/column', { className: classNames['33'] }, [ heading ] ],
+            [ 'core/column', { className: classNames['33'] }, [ heading ] ],
+            [ 'core/column', { className: classNames['33'] }, [ heading ] ]
             ],
             scope: [ 'block' ],
         }

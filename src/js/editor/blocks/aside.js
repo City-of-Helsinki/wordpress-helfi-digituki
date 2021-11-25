@@ -34,14 +34,13 @@
         if ( ! blockId ) {
             setAttributes( { blockId: clientId } );
         }
+        console.log("bgColor: ", bgColor);
         return (
-            <aside {...blockProps} 			style={ {
-				backgroundColor: bgColor.color,
-			} }>
+            <aside {...blockProps}>
                             <InspectorControls>
                                 <PanelBody>
                                     <SelectControl
-                                        label={wp.i18n.__('Heading')}
+                                        label={__('Heading')}
                                         value={ attributes.contentTitleHeading }
                                         options={ [
                                             {label: "H2", value: 'h2'},
@@ -54,7 +53,7 @@
                                     />
                                 </PanelBody>
                                 <PanelColorSettings
-                                    title={ 'Color Options' }
+                                    title={__('Taustaväri')}
                                     colorSettings= { [ 
                                         {
                                         value: bgColor.color,
@@ -64,16 +63,20 @@
                                     ] }
                                 />
                             </InspectorControls>
-                            <RichText
-                                tagName={attributes.contentTitleHeading}
-                                value={ attributes.contentTitle }
-                                multiline={ false }
-                                withoutInteractiveFormatting
-                                allowedFormats={ [] }
-                                onChange={ ( contentTitle ) => setAttributes( { contentTitle } ) }
-                                placeholder={ __( 'Header' ) } 
-                            />
-                            <div class="aside-content">
+                            <div class="aside-content" 
+                                    style={ {
+			                            backgroundColor: bgColor.color,
+			                        } }
+                            >
+                                <RichText
+                                    tagName={attributes.contentTitleHeading}
+                                    value={ attributes.contentTitle }
+                                    multiline={ false }
+                                    withoutInteractiveFormatting
+                                    allowedFormats={ [] }
+                                    onChange={ ( contentTitle ) => setAttributes( { contentTitle } ) }
+                                    placeholder={ __( 'Header' ) } 
+                                />
                                 <InnerBlocks />
                             </div>
             </aside>
@@ -84,9 +87,9 @@
         const { attributes, setAttributes } = props;
         const { blockId, contentTitle, bgColor } = attributes;
 
-        let saveProps = {
-            className: getColorClassName( 'background-color', bgColor)
-        };
+        const bgClassName = 'aside-content ' + getColorClassName( 'background-color', bgColor);
+        
+        let saveProps = {};
 
         if ( contentTitle ){
             Object.assign(saveProps, {'aria-labelledby': blockId});
@@ -95,8 +98,8 @@
         
        return (
             <aside {...blockProps}>
-                <RichText.Content id={blockId} tagName={attributes.contentTitleHeading} value={ attributes.contentTitle } />
-                <div class="aside-content">
+                <div className={bgClassName}>
+                    <RichText.Content id={blockId} tagName={attributes.contentTitleHeading} value={ attributes.contentTitle } />
                     <InnerBlocks.Content />
                 </div>
             </aside>
@@ -125,7 +128,7 @@
 			},
             bgColor: {
                 type: 'string',
-                default: ''
+                default: 'medium-light'
             }
             
 		},
