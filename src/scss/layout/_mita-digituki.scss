@@ -1,0 +1,16 @@
+.grid--banner{
+    &__heading{
+        text-align: center;
+        @include breakpoint('xl'){
+            order: 2;
+        }
+    }
+    &__column{
+        @include breakpoint('xl'){
+            order: 1;
+            &--last{
+                order: 3;
+            }
+        }
+    }
+}

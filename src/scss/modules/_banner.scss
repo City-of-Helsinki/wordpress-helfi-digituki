@@ -1,10 +1,12 @@
-.wp-block-hds-wp-banner-custom {
+.wp-block-hds-wp-banner-custom, .wp-block-digituki-banner {
     background-color: rgba(245, 164, 199, 0.6);
     background-color: #F5A3C7;
 	color: $black;
 	margin-bottom: $paragraph-margin-bottom;
     border-radius: 10px;
-	padding: spacing('s');
+	padding: spacing('l');
+	padding-bottom: spacing('m');
+	
 	* {
 		color: inherit;
 	}
@@ -13,6 +15,21 @@
 		display: flex;
 		justify-content: space-between;
 		flex-direction: column;
+
+		&--icon-top {
+			.content__inner--icon {
+				margin-top: spacing('s');
+				margin-bottom: spacing('l');
+				align-self: center;
+			}
+		}
+
+		&--icon-side {
+			.content__inner--icon {
+				margin-left: spacing('s');
+				margin-right: spacing('m');
+			}
+		}
 
 		&__inner {
 
@@ -27,6 +44,16 @@
                 *:last-child{
                     margin-bottom: 0;
                 }
+				h2,h3,h4,h5,h6{
+					margin-top: 0;
+				}
+				h3 {
+					font-size: rem-calc(36);
+					text-align: center;
+				}
+				font-size: rem-calc(24);
+				text-align: inherit;
+				align-self: normal;
             }
 
 			&--button {}
@@ -62,13 +89,31 @@
 			}
 		}
 
+		ul {
+			li {
+				list-style-type: disc;
+				margin-bottom: spacing('s')
+			}
+		}
+
+		@include breakpoint('s') {
+			&--icon-side {
+				content {
+					&__inner--icon {
+						align-self: center;
+					}
+				}
+			}
+			
+		}
+
 		@include breakpoint('m') {
 			flex-direction: row;
 
 			&__inner {
 
 				&--icon {
-
+					align-self: center;
 					svg {
 						width: 100px;
 					}
@@ -76,6 +121,8 @@
 
 				&--text {
 					flex-grow: 1;
+					margin-bottom: spacing('s');
+					margin-left: 0;
 				}
 
 				&--button {
@@ -87,13 +134,13 @@
 		@include breakpoint('l') {
 
 			&__heading {
-				font-size: rem-calc(36);
+				font-size: rem-calc(48);
 			}
 
 			&__inner {
 
 				+ .content__inner {
-					margin-left: spacing('l');
+					margin-left: 0;
 				}
 
 
