@@ -130,8 +130,8 @@
             className: 'digituki-card grid__column'
         });
 		return(
-            <article {...blockProps}>
-                <div class="digituki-card__content">
+            <article id={attributes.contentTitle} {...blockProps}>
+                <div class="digituki-card__content" tabindex="0" aria-labelledby={attributes.contentTitle}>
                     <div class="digituki-card__header">
                         <RichText.Content tagName="h2" value={ attributes.contentTitle } />
                     </div>
