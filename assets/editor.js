@@ -1,5 +1,17 @@
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+function hdsInfoIcon() {
+  const infoCircleFill = hdsIcons('info-circle-fill');
+  return wp.element.createElement('svg', {
+    className: 'icon icon--info-circle-fill',
+    viewBox: '0 0 24 24',
+    'aria-hidden': 'true',
+    tabindex: '-1'
+  }, wp.element.createElement('path', {
+    d: infoCircleFill
+  }));
+}
+
 (function (wp) {
   const __ = wp.i18n.__;
   const {
@@ -74,12 +86,9 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       });
     }
 
-    return /*#__PURE__*/React.createElement("aside", _extends({}, blockProps, {
-      style: {
-        backgroundColor: bgColor.color
-      }
-    }), /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(SelectControl, {
-      label: wp.i18n.__('Heading'),
+    console.log("bgColor: ", bgColor);
+    return /*#__PURE__*/React.createElement("aside", blockProps, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(SelectControl, {
+      label: __('Heading'),
       value: attributes.contentTitleHeading,
       options: [{
         label: "H2",
@@ -101,13 +110,18 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
         contentTitleHeading: newSize
       })
     })), /*#__PURE__*/React.createElement(PanelColorSettings, {
-      title: 'Color Options',
+      title: __('Taustaväri'),
       colorSettings: [{
         value: bgColor.color,
         onChange: setBgColor,
         label: __('Color')
       }]
-    })), /*#__PURE__*/React.createElement(RichText, {
+    })), /*#__PURE__*/React.createElement("div", {
+      class: "aside-content",
+      style: {
+        backgroundColor: bgColor.color
+      }
+    }, /*#__PURE__*/React.createElement(RichText, {
       tagName: attributes.contentTitleHeading,
       value: attributes.contentTitle,
       multiline: false,
@@ -117,9 +131,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
         contentTitle
       }),
       placeholder: __('Header')
-    }), /*#__PURE__*/React.createElement("div", {
-      class: "aside-content"
-    }, /*#__PURE__*/React.createElement(InnerBlocks, null)));
+    }), /*#__PURE__*/React.createElement(InnerBlocks, null)));
   }
 
   function save(props) {
@@ -132,9 +144,8 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       contentTitle,
       bgColor
     } = attributes;
-    let saveProps = {
-      className: getColorClassName('background-color', bgColor)
-    };
+    const bgClassName = 'aside-content ' + getColorClassName('background-color', bgColor);
+    let saveProps = {};
 
     if (contentTitle) {
       Object.assign(saveProps, {
@@ -143,13 +154,13 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
     }
 
     const blockProps = useBlockProps.save(saveProps);
-    return /*#__PURE__*/React.createElement("aside", blockProps, /*#__PURE__*/React.createElement(RichText.Content, {
+    return /*#__PURE__*/React.createElement("aside", blockProps, /*#__PURE__*/React.createElement("div", {
+      className: bgClassName
+    }, /*#__PURE__*/React.createElement(RichText.Content, {
       id: blockId,
       tagName: attributes.contentTitleHeading,
       value: attributes.contentTitle
-    }), /*#__PURE__*/React.createElement("div", {
-      class: "aside-content"
-    }, /*#__PURE__*/React.createElement(InnerBlocks.Content, null)));
+    }), /*#__PURE__*/React.createElement(InnerBlocks.Content, null)));
   }
 
   registerBlockType('digituki/aside', {
@@ -173,7 +184,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       },
       bgColor: {
         type: 'string',
-        default: ''
+        default: 'medium-light'
       }
     },
     edit: withColors('bgColor')(edit),
@@ -196,6 +207,34 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
     InnerBlocks
   } = wp.blockEditor;
   const ALLOWED_BLOCKS = ['core/paragraph', 'core/heading', 'core/list'];
+  const MY_TEMPLATE = [['core/heading', {
+    placeholder: 'Otsikko'
+  }]];
+
+  const BannerIcon = props => {
+    const {
+      icon
+    } = props;
+    if (!icon) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      class: "content__inner content__inner--icon"
+    }, icon);
+  };
+
+  const Banner = props => {
+    const {
+      icon,
+      content,
+      iconPosition
+    } = props;
+    return /*#__PURE__*/React.createElement("div", {
+      className: `content ${icon ? iconPosition : 'content--no-icon'}`
+    }, /*#__PURE__*/React.createElement(BannerIcon, {
+      icon: icon
+    }), /*#__PURE__*/React.createElement("div", {
+      class: "content__inner content__inner--text"
+    }, content));
+  };
 
   function digitukiIconPositionControl(props) {
     let options = [{
@@ -213,37 +252,45 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
     }, props);
   }
 
-  function editBanner() {
-    return function (props) {
-      return createElement('div', useBlockProps({
-        className: 'wp-block-hds-wp-banner-custom'
-      }), hdsInspectorControls({
-        title: wp.i18n.__('Content'),
-        initialOpen: true
-      }, hdsIconControl(props), digitukiIconPositionControl(props)), createElement('div', useBlockProps(), createElement('div', {
-        className: `content ${props.attributes.contentIconPosition}`
-      }, createElement('div', {
-        className: 'content__inner content__inner--icon'
-      }, hdsContentIcon(props)), createElement('div', {
-        className: 'content__inner content__inner--text'
-      }, createElement(InnerBlocks, {
-        allowedBlocks: ALLOWED_BLOCKS
-      })))));
-    };
+  function editBanner(props) {
+    const {
+      attributes,
+      setAttributes
+    } = props;
+    const {
+      contentIconPosition
+    } = attributes;
+    const blockProps = useBlockProps({
+      className: 'wp-block-hds-wp-banner-custom'
+    });
+    return /*#__PURE__*/React.createElement("div", blockProps, hdsInspectorControls({
+      title: wp.i18n.__('Content'),
+      initialOpen: true
+    }, hdsIconControl(props), digitukiIconPositionControl(props)), /*#__PURE__*/React.createElement(Banner, {
+      content: /*#__PURE__*/React.createElement(InnerBlocks, {
+        allowedBlocks: ALLOWED_BLOCKS,
+        template: MY_TEMPLATE
+      }),
+      icon: hdsContentIcon(props),
+      iconPosition: contentIconPosition ? contentIconPosition : ''
+    }));
   }
 
-  function saveBanner() {
-    return function (props) {
-      return createElement('div', useBlockProps.save({
-        className: 'wp-block-hds-wp-banner-custom'
-      }), createElement('div', {
-        className: `content ${props.attributes.contentIconPosition}`
-      }, createElement('div', {
-        className: 'content__inner content__inner--icon'
-      }, hdsContentIcon(props)), createElement('div', {
-        className: 'content__inner content__inner--text'
-      }, createElement(InnerBlocks.Content))));
-    };
+  function saveBanner(props) {
+    const {
+      attributes
+    } = props;
+    const {
+      contentIconPosition
+    } = attributes;
+    const blockProps = useBlockProps.save({
+      className: 'wp-block-hds-wp-banner-custom'
+    });
+    return /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(Banner, {
+      icon: hdsContentIcon(props),
+      iconPosition: contentIconPosition ? contentIconPosition : '',
+      content: /*#__PURE__*/React.createElement(InnerBlocks.Content, null)
+    }));
   }
 
   registerBlockType('digituki/banner', {
@@ -264,8 +311,8 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
         default: 'content--icon-side'
       }
     },
-    edit: editBanner(),
-    save: saveBanner()
+    edit: editBanner,
+    save: saveBanner
   });
 })(window.wp);
 
@@ -531,6 +578,14 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
     placeholder: "Lisää otsikko"
   }];
   const group = ['digituki/aside', {}];
+  const banner = ['digituki/banner', {}];
+  const classNames = {
+    'full': 'grid__column xs-12',
+    'main': 'grid__column s-12 l-7 xl-8',
+    'side': 'grid__column grid__column--sidebar s-12 l-5 xl-4',
+    '50': 'grid_column l-6',
+    '33': 'grid_column l-4'
+  };
 
   const generateColumnVariationsIcon = function (d) {
     const el = wp.element.createElement;
@@ -556,7 +611,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       className: 'grid'
     },
     innerBlocks: [['core/column', {
-      className: 'grid__column xs-12'
+      className: classNames['full']
     }, [heading]]],
     scope: ['block']
   }, {
@@ -567,9 +622,9 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       className: 'grid'
     },
     innerBlocks: [['core/column', {
-      className: 'grid__column l-6'
+      className: classNames['50']
     }, [heading]], ['core/column', {
-      className: 'grid__column l-6'
+      className: classNames['50']
     }, [heading]]],
     scope: ['block']
   }, {
@@ -580,11 +635,10 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       className: 'grid'
     },
     innerBlocks: [['core/column', {
-      className: 'grid__column l-8'
-    }, [heading]], ['core/column', {
-      className: 'grid__column l-4 grid__column--sidebar',
-      allowedEmbedBlocks
-    }, [group]]],
+      className: classNames['main']
+    }, [heading]], ['digituki/aside', {
+      className: classNames['side']
+    }]],
     scope: ['block']
   }, {
     name: 'hel-grid-column-33-66',
@@ -594,10 +648,10 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       className: 'grid'
     },
     innerBlocks: [['core/column', {
-      className: 'grid__column l-4 grid__column--sidebar',
+      className: classNames['side'],
       allowedEmbedBlocks
     }, [group]], ['core/column', {
-      className: 'grid__column l-8'
+      className: classNames['main']
     }, [heading]]],
     scope: ['block']
   }, {
@@ -608,12 +662,27 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       className: 'grid'
     },
     innerBlocks: [['core/column', {
-      className: 'grid__column l-4'
+      className: classNames['33']
     }, [heading]], ['core/column', {
-      className: 'grid__column l-4'
+      className: classNames['33']
     }, [heading]], ['core/column', {
-      className: 'grid__column l-4'
+      className: classNames['33']
     }, [heading]]],
+    scope: ['block']
+  }, {
+    name: 'hel-grid-column-banner',
+    title: 'Bannerit',
+    icon: generateColumnVariationsIcon('M41 14a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h30a2 2 0 0 0 2-2V14zM28.5 34h-9V14h9v20zm2 0V14H39v20h-8.5zm-13 0H9V14h8.5v20z'),
+    attributes: {
+      className: 'grid grid--banner'
+    },
+    innerBlocks: [['core/column', {
+      className: 'grid__column xl-4 m-12 grid--banner__heading'
+    }, [heading]], ['core/column', {
+      className: 'grid__column xl-4 m-6 grid--banner__column'
+    }, [banner]], ['core/column', {
+      className: 'grid__column xl-4 m-6 grid--banner__column grid--banner__column--last '
+    }, [banner]]],
     scope: ['block']
   }];
   window.addEventListener('load', function () {
@@ -636,12 +705,16 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       title: __('Kainalojuttu'),
       attributes: {
         className: 'lift',
-        backgroundColor: 'medium-light'
+        backgroundColor: 'medium-light',
+        tagName: 'article'
       },
-      innerBlocks: [['core/heading', {
+      innerBlocks: [['core/group', {
+        tagName: 'div',
+        className: 'hds-container'
+      }, [['core/heading', {
         level: 2,
         placeholder: __('Lisää otsikko')
-      }]]
+      }]]]]
     });
   });
 })(window.wp);
@@ -671,6 +744,21 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
     InspectorControls
   } = wp.blockEditor;
 
+  const MapInfo = props => {
+    const {
+      label
+    } = props;
+    if (!label) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      class: "mapinfo has-icon has-icon--before"
+    }, /*#__PURE__*/React.createElement("span", {
+      class: "mapinfo__icon",
+      "aria-hidden": "true"
+    }, hdsInfoIcon()), /*#__PURE__*/React.createElement("span", {
+      class: "mapinfo__text"
+    }, label));
+  };
+
   function edit(props) {
     const {
       attributes,
@@ -681,34 +769,9 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       mapUrl,
       iframeTitle,
       buttonText,
-      altText
+      altText,
+      infoText
     } = attributes;
-
-    const removeFile = () => {
-      setAttributes({
-        downloadFile: ''
-      });
-    };
-
-    const handleRender = ({
-      open
-    }) => {
-      let cb = open;
-
-      if (downloadFile) {
-        return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("img", {
-          onClick: open,
-          src: downloadFile
-        }), /*#__PURE__*/React.createElement("button", {
-          onClick: removeFile
-        }, "Poista kuva"));
-      }
-
-      return /*#__PURE__*/React.createElement("button", {
-        onClick: cb
-      }, "Lis\xE4\xE4 kuva");
-    };
-
     const blockProps = useBlockProps({
       className: ''
     });
@@ -739,7 +802,15 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       onChange: value => setAttributes({
         buttonText: value
       })
-    })))), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("div", {
+    })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(TextControl, {
+      label: "Opasteteksti",
+      value: infoText,
+      onChange: value => setAttributes({
+        infoText: value
+      })
+    })))), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(MapInfo, {
+      label: infoText
+    }), /*#__PURE__*/React.createElement("div", {
       class: "mapframe"
     }, /*#__PURE__*/React.createElement("iframe", {
       title: iframeTitle,
@@ -761,14 +832,17 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
       mapUrl,
       iframeTitle,
       buttonText,
-      altText
+      altText,
+      infoText
     } = attributes;
     const blockProps = useBlockProps.save({
       className: 'palvelukartta'
     });
     return /*#__PURE__*/React.createElement("article", blockProps, /*#__PURE__*/React.createElement("p", {
       class: "screen-reader-text"
-    }, altText), /*#__PURE__*/React.createElement("div", {
+    }, altText), /*#__PURE__*/React.createElement(MapInfo, {
+      label: infoText
+    }), /*#__PURE__*/React.createElement("div", {
       class: "mapframe"
     }, /*#__PURE__*/React.createElement("iframe", {
       title: iframeTitle,
@@ -801,6 +875,9 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
         type: 'string'
       },
       altText: {
+        type: 'string'
+      },
+      infoText: {
         type: 'string'
       }
     },
