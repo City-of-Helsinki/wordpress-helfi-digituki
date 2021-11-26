@@ -34,18 +34,17 @@
 		);
 	}
 
-	function imageConfig(props) {
-        console.log(props);
-		return {
+    function imageConfig(props){
+		return({
 			id: props.attributes.mediaId,
 			alt: props.attributes.mediaAlt,
 			src: props.attributes.mediaUrl,
 			srcset: props.attributes.mediaSrcset,
 			width: props.attributes.mediaWidth,
 			height: props.attributes.mediaHeight,
-		};
+			"aria-hidden":"true"
+		});
 	}
-    
 	function contentButton(props) {
 		return hdsContentButton(
 			props,
