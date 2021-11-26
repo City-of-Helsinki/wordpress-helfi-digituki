@@ -13,7 +13,13 @@
                     tagName: 'article'
                 },
                 innerBlocks: [
-                    ['core/heading', {level: 2, placeholder: __('Lisää otsikko')}]
+                    ['core/group', {
+                        tagName: 'div',
+                        className: 'hds-container'
+                    },[
+                        ['core/heading', {level: 2, placeholder: __('Lisää otsikko')}]
+                    ]
+                    ]
                 ]
             },
         );

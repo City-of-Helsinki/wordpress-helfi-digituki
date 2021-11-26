@@ -1,6 +1,15 @@
-.lift{
+.lift, .lift.alignfull{
     padding: var(--spacing-4-xl) var(--spacing-layout-s);
-    >h1, >h2, >h3, >h4, >h5, >h6{
+    >div>h1, >div>h2, >div>h3, >div>h4, >div>h5, >div>h6{
         margin-top: 0;
+    }
+}
+
+.content__body{
+    .alignfull.lift:last-child,.alignfull.wp-block-cover:last-child{
+        margin-bottom: -20px;
+        @include breakpoint('l'){
+            margin-bottom: -80px;
+        }
     }
 }
