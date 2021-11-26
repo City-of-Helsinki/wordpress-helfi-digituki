@@ -1,16 +1,17 @@
 .wp-block-hds-wp-banner-custom, .wp-block-digituki-banner {
-    background-color: rgba(245, 164, 199, 0.6);
-    background-color: #F5A3C7;
+    background-color: var(--color-suomenlinna-medium-light);
 	color: $black;
 	margin-bottom: $paragraph-margin-bottom;
     border-radius: 10px;
-	padding: spacing('l');
-	padding-bottom: spacing('m');
+	margin-top: spacing('l');
+	padding: spacing('s');
 	
 	* {
 		color: inherit;
 	}
-
+	@include breakpoint('l') {
+		margin-top: 0;
+	}
 	.content {
 		display: flex;
 		justify-content: space-between;
