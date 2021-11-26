@@ -4,11 +4,15 @@
 	color: $black;
 	margin-bottom: $paragraph-margin-bottom;
     border-radius: 10px;
+	margin-top: spacing('l');
 	padding: spacing('s');
 	* {
 		color: inherit;
 	}
 
+	@include breakpoint('l') {
+		margin-top: 0;
+	}
 	.content {
 		display: flex;
 		justify-content: space-between;

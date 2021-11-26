@@ -16,10 +16,23 @@
         padding: spacing('s');
     }
 
+    &__content{
+        padding: 0;
+        padding-bottom: spacing('s');
+    }
+    &__summary{
+        padding-inline: spacing('s');
+    }
+
     &__header{
+        padding-inline: spacing('s');
+        padding-block: spacing('m');
+        background-color: var(--wp--preset--color--light);
         h2{
+            color: #BD2719;
             margin-top: 0;
-            font-size: fontsize-heading('s');
+            margin-bottom: 0;
+            font-size: fontsize-heading('m');
         }
     }
 }
