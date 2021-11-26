@@ -1,0 +1,8 @@
+.social-wrapper{
+    display: flex;
+    justify-content: center;
+    @include breakpoint('m') {
+       display: block;
+    }
+}
+   
