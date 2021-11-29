@@ -25,6 +25,7 @@
 
             &:focus, &:hover{
                 outline: 0px;
+                text-decoration:  underline;
                 &:after{
                     outline: 2px solid var(--color-black);
                 }
