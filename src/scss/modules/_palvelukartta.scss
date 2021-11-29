@@ -29,6 +29,7 @@
         height: 100%;
         border: none; 
         pointer-events: none;
+        touch-action: none;
     }
 
     &.active{
@@ -36,6 +37,7 @@
 
         iframe{
             pointer-events: all;
+            touch-action: auto;
         }
     }
 }
