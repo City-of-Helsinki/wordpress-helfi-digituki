@@ -1,0 +1,52 @@
+@each $heading, $font-size in $digituki-heading-font-sizes {
+    #{$heading} {
+        color: $heading-color;
+        font-size: $font-size;
+        font-family: $heading-font-family;
+        font-weight: $heading-font-weight;
+        line-height: $heading-line-height;
+        letter-spacing: $heading-letter-spacing;
+        margin-top: $heading-margin-top;
+        margin-bottom: $heading-margin-bottom;
+        word-wrap: $heading-word-wrap;
+    }
+}
+
+@each $breakpoint, $size in $breakpoints {
+    @if ( map-has-key( $digituki-heading-responsive-font-sizes, $breakpoint ) ) {
+        @include breakpoint($breakpoint) {
+            @each $heading, $font-size in map-get( $digituki-heading-responsive-font-sizes, $breakpoint ) {
+                #{$heading} {
+                font-size: $font-size;
+                }
+            }
+        }
+    }
+} 
+
+h5,
+h6 {
+    line-height: 1.2;
+}
+
+a {
+    color: var(--color-coat-of-arms);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--color-coat-of-arms-dark);
+        text-decoration: underline;
+    }
+}
+
+p {
+    font-size: var(--fontsize-body-xl);
+}
+
+ul {
+    padding-inline-start: 0;
+
+    li {
+        font-size: var(--fontsize-body-xl);
+    }
+}

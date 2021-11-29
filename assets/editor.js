@@ -360,14 +360,14 @@ function hdsInfoIcon() {
   }
 
   function imageConfig(props) {
-    console.log(props);
     return {
       id: props.attributes.mediaId,
       alt: props.attributes.mediaAlt,
       src: props.attributes.mediaUrl,
       srcset: props.attributes.mediaSrcset,
       width: props.attributes.mediaWidth,
-      height: props.attributes.mediaHeight
+      height: props.attributes.mediaHeight,
+      "aria-hidden": "true"
     };
   }
 
@@ -444,8 +444,12 @@ function hdsInfoIcon() {
     const blockProps = useBlockProps.save({
       className: 'digituki-card grid__column'
     });
-    return /*#__PURE__*/React.createElement("article", blockProps, /*#__PURE__*/React.createElement("div", {
-      class: "digituki-card__content"
+    return /*#__PURE__*/React.createElement("article", _extends({
+      id: attributes.contentTitle
+    }, blockProps), /*#__PURE__*/React.createElement("div", {
+      class: "digituki-card__content",
+      tabindex: "0",
+      "aria-labelledby": attributes.contentTitle
     }, /*#__PURE__*/React.createElement("div", {
       class: "digituki-card__header"
     }, /*#__PURE__*/React.createElement(RichText.Content, {

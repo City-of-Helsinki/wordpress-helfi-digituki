@@ -1,7 +1,16 @@
 .lift, .lift.alignfull{
-    padding: var(--spacing-4-xl) var(--spacing-layout-s);
+    padding: var(--spacing-4-xl) var(--spacing-4-xl);
     >div>h1, >div>h2, >div>h3, >div>h4, >div>h5, >div>h6{
         margin-top: 0;
+    }
+}
+
+.wp-block-cover__inner-container{
+    margin: var(--spacing-m);
+    p {
+        padding: var(--spacing-m);
+        line-height: 3.5rem;
+        background-color: white;
     }
 }
 

@@ -1,0 +1,10 @@
+.menu__item {
+    a {
+        font-size: var(--fontsize-heading-m) !important;
+
+        &:hover {
+            text-decoration: none;
+            color: var(--primary-color-dark);
+        }
+    }
+}
