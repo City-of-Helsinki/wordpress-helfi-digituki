@@ -10,8 +10,8 @@
     overflow: hidden;
     border: solid 0px var(--color-bus);
     transition: border-width 0.05s linear;
-
-    @include breakpoint('xs') {
+    padding-bottom: 130%;
+    @include breakpoint('m') {
         padding-bottom: 75%;
     }
     @include breakpoint('l') {
