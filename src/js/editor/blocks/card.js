@@ -81,7 +81,11 @@
         )
     }
     function edit(props) {
-        const { attributes, setAttributes } = props;
+        const { attributes, setAttributes, clientId } = props;
+		const { blockId } = attributes;
+        if ( ! blockId ) {
+            setAttributes( { blockId: clientId } );
+        }
 		const blockProps = useBlockProps({
             className: 'digituki-card grid__column'
         });
@@ -125,15 +129,18 @@
 	}
 
 	function save(props) {
-        const { attributes, setAttributes } = props;
+		const { attributes, setAttributes, clientId } = props;
+        const { blockId } = attributes;
+		const blockTitle = "title-" + blockId;
+		const blockDescr = "content-" + blockId;
         const blockProps = useBlockProps.save({
             className: 'digituki-card grid__column'
         });
 		return(
-            <article id={attributes.contentTitle} {...blockProps}>
-                <div class="digituki-card__content" tabindex="0" aria-labelledby={attributes.contentTitle}>
+            <div {...blockProps} id={attributes.contentTitle} >
+                <article class="digituki-card__content" tabindex="0" aria-labelledby={blockTitle} aria-describedby={blockDescr} >
                     <div class="digituki-card__header">
-                        <RichText.Content tagName="h2" value={ attributes.contentTitle } />
+                        <RichText.Content tagName="h2" value={ attributes.contentTitle } id={blockTitle} />
                     </div>
                     <div class="digituki-card__image">
                         {hdsSingleImage(
@@ -141,11 +148,11 @@
                         )}
                     </div>
                     <div class="digituki-card__summary">
-                        <RichText.Content tagName="p" value={ attributes.contentText } />
+                        <RichText.Content tagName="p" value={ attributes.contentText } id={blockDescr} />
                         {contentButton(props)}
                     </div>
-                </div>
-            </article>
+                </article>
+            </div>
         )
 	}
 
@@ -202,6 +209,9 @@
 				type: 'string',
 				default: '',
 			},
+			blockId: {
+                type: 'string'
+             },
 		},
 		edit,
 		save
