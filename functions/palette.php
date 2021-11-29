@@ -11,7 +11,8 @@ function digituki_colors() {
 		'digituki' => '#BDD4EE',
 		'digituki-light' => '#EDF4FB',
 		'digituki-medium-light' => '#FFE584',
-		'digituki-dark' => '#F29AC1',
+		'digituki-dark' => '#0072c6',
+        'digituki-accent' => '#ffdbeb',
 	);
 }
 
@@ -20,7 +21,7 @@ function digituki_palette(){
 	$digituki_colors = digituki_colors();
 	$additional_colors = [
 		["name" => __("Medium light"), "slug" => "medium-light", "color" => $digituki_colors["digituki-medium-light"]],
-		["name" => __("Dark"), "slug" => "dark", "color" => $digituki_colors["digituki-dark"] ]		
+        ["name" => __("Accent"), "slug" => "accent", "color" => $digituki_colors["digituki-accent"]]	
 	];
 
     return array_merge($palette, $additional_colors);
@@ -45,5 +46,6 @@ add_filter('helsinki_scheme_root_styles_colors', function($colors, $scheme){
 		'--primary-color-light' => $custom['digituki-light'],
 		'--primary-color-medium' => $custom['digituki-medium-light'],
 		'--primary-color-dark' => $custom['digituki-dark'],
+        '--primary-color-accent' => $custom['digituki-accent'],
 	);
 }, 11, 2);
