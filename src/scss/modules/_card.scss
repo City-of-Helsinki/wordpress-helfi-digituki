@@ -25,15 +25,18 @@
         padding-bottom: spacing('s');
     }
     &__summary{
-        padding-inline: spacing('s');
+        padding-left: spacing('s');
+        padding-right: spacing('s');
         a{
             padding:spacing("xs");
         }
     }
 
     &__header{
-        padding-inline: spacing('s');
-        padding-block: spacing('m');
+        padding-left: spacing('s');
+        padding-right: spacing('s');
+        padding-top: spacing('m');
+        padding-bottom: spacing('m');
         background-color: #f5f5f7;
         h2{
             color: #BD2719;
