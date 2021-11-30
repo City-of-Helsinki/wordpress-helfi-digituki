@@ -1,7 +1,7 @@
 .social-wrapper{
     display: flex;
     justify-content: center;
-    @include breakpoint('m') {
+    @include breakpoint('l') {
        display: block;
     }
 }
