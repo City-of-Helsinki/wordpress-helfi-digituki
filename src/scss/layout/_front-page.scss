@@ -25,4 +25,17 @@
     &:not(.hero):last-child{
         padding-bottom: 0;
     }
+
+    .wp-block-hds-wp-image-banner{
+        &:first-child{
+            margin-top: -2rem;
+            @include breakpoint('l'){
+                margin-top: -3rem;
+            }
+        }
+
+        .content__inner{
+            background: rgba(255,255,255,0.95);
+        }
+    }
 }
