@@ -786,16 +786,25 @@ function hdsInfoIcon() {
     }, label));
   };
 
+  const contentButton = props => {
+    return hdsContentButton(props, {
+      className: 'hds-button button',
+      href: props.attributes.buttonUrl,
+      target: '_blank',
+      rel: 'noopener'
+    }, hdsExternalLinkIcon());
+  };
+
   function edit(props) {
     const {
       attributes,
       setAttributes
     } = props;
     const {
-      downloadFile,
       mapUrl,
       iframeTitle,
       buttonText,
+      buttonUrl,
       altText,
       infoText
     } = attributes;
@@ -824,6 +833,12 @@ function hdsInfoIcon() {
         altText: value
       })
     })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(TextControl, {
+      label: "Linkki kokoruutun\xE4kym\xE4\xE4n",
+      value: buttonUrl,
+      onChange: value => setAttributes({
+        buttonUrl: value
+      })
+    })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(TextControl, {
       label: "Button text",
       value: buttonText,
       onChange: value => setAttributes({
@@ -842,12 +857,7 @@ function hdsInfoIcon() {
     }, /*#__PURE__*/React.createElement("iframe", {
       title: iframeTitle,
       src: mapUrl
-    })), /*#__PURE__*/React.createElement("a", {
-      href: mapUrl,
-      target: "_blank",
-      rel: "noopener",
-      class: "button hds-button"
-    }, buttonText)));
+    })), contentButton(props)));
   }
 
   function save(props) {
@@ -865,21 +875,19 @@ function hdsInfoIcon() {
     const blockProps = useBlockProps.save({
       className: 'palvelukartta'
     });
-    return /*#__PURE__*/React.createElement("article", blockProps, /*#__PURE__*/React.createElement("p", {
-      class: "screen-reader-text"
-    }, altText), /*#__PURE__*/React.createElement(MapInfo, {
+    return /*#__PURE__*/React.createElement("article", blockProps, /*#__PURE__*/React.createElement("div", {
+      class: "mapcontent",
+      "aria-hidden": "true"
+    }, /*#__PURE__*/React.createElement(MapInfo, {
       label: infoText
     }), /*#__PURE__*/React.createElement("div", {
       class: "mapframe"
     }, /*#__PURE__*/React.createElement("iframe", {
       title: iframeTitle,
       src: mapUrl
-    })), /*#__PURE__*/React.createElement("a", {
-      href: mapUrl,
-      target: "_blank",
-      rel: "noopener",
-      class: "button hds-button"
-    }, buttonText));
+    }))), altText && /*#__PURE__*/React.createElement("p", {
+      class: "screen-reader-text"
+    }, altText), contentButton(props));
   }
 
   registerBlockType('digituki/palvelukartta', {
@@ -899,6 +907,9 @@ function hdsInfoIcon() {
         type: 'string'
       },
       buttonText: {
+        type: 'string'
+      },
+      buttonUrl: {
         type: 'string'
       },
       altText: {
