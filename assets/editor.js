@@ -401,8 +401,19 @@ function hdsInfoIcon() {
   function edit(props) {
     const {
       attributes,
-      setAttributes
+      setAttributes,
+      clientId
     } = props;
+    const {
+      blockId
+    } = attributes;
+
+    if (!blockId) {
+      setAttributes({
+        blockId: clientId
+      });
+    }
+
     const blockProps = useBlockProps({
       className: 'digituki-card grid__column'
     });
@@ -439,29 +450,38 @@ function hdsInfoIcon() {
   function save(props) {
     const {
       attributes,
-      setAttributes
+      setAttributes,
+      clientId
     } = props;
+    const {
+      blockId
+    } = attributes;
+    const blockTitle = "title-" + blockId;
+    const blockDescr = "content-" + blockId;
     const blockProps = useBlockProps.save({
       className: 'digituki-card grid__column'
     });
-    return /*#__PURE__*/React.createElement("article", _extends({
+    return /*#__PURE__*/React.createElement("div", _extends({}, blockProps, {
       id: attributes.contentTitle
-    }, blockProps), /*#__PURE__*/React.createElement("div", {
+    }), /*#__PURE__*/React.createElement("article", {
       class: "digituki-card__content",
       tabindex: "0",
-      "aria-labelledby": attributes.contentTitle
+      "aria-labelledby": blockTitle,
+      "aria-describedby": blockDescr
     }, /*#__PURE__*/React.createElement("div", {
       class: "digituki-card__header"
     }, /*#__PURE__*/React.createElement(RichText.Content, {
       tagName: "h2",
-      value: attributes.contentTitle
+      value: attributes.contentTitle,
+      id: blockTitle
     })), /*#__PURE__*/React.createElement("div", {
       class: "digituki-card__image"
     }, hdsSingleImage(imageConfig(props))), /*#__PURE__*/React.createElement("div", {
       class: "digituki-card__summary"
     }, /*#__PURE__*/React.createElement(RichText.Content, {
       tagName: "p",
-      value: attributes.contentText
+      value: attributes.contentText,
+      id: blockDescr
     }), contentButton(props))));
   }
 
@@ -516,6 +536,9 @@ function hdsInfoIcon() {
       buttonUrl: {
         type: 'string',
         default: ''
+      },
+      blockId: {
+        type: 'string'
       }
     },
     edit,

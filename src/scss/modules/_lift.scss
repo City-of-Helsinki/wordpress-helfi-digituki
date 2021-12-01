@@ -22,12 +22,3 @@
         backdrop-filter: blur(8px);
     }
 }
-
-.content__body{
-    .alignfull.lift:last-child,.alignfull.wp-block-cover:last-child{
-        margin-bottom: -20px;
-        @include breakpoint('l'){
-            margin-bottom: -80px;
-        }
-    }
-}

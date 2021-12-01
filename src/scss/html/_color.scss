@@ -1,3 +1,7 @@
 .has-medium-light-background-color{
-    background-color: #FFE584;
+    background-color: var(--color-engel);
+}
+
+.has-accent-background-color{
+    background: var(--color-suomenlinna-medium-light);
 }

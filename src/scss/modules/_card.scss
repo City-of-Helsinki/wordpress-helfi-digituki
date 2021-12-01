@@ -14,11 +14,10 @@
         border: 1px solid rgba(0,0,0,.125);
         border-radius: .25rem;
         padding: spacing('s');
-        &:focus,
-        &:hover{
-            border: 2px solid black;
-            box-shadow: 5px 10px;
-          }
+        &:hover,
+        &:focus-within{
+            outline: 2px solid black;
+        }
     }
 
     &__content{
@@ -27,6 +26,9 @@
     }
     &__summary{
         padding-inline: spacing('s');
+        a{
+            padding:spacing("xs");
+        }
     }
 
     &__header{

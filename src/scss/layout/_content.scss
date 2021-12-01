@@ -1,0 +1,18 @@
+.page {
+
+	&:not(.page-template-landing-page) {
+		.content {
+			&__container {
+				padding-top: spacing('layout-l');
+				padding-bottom: spacing('layout-l');
+			}
+		}
+	}
+
+}
+
+.content__body{
+    .alignfull.lift:last-child,.alignfull.wp-block-cover:last-child{
+        margin-bottom: -3rem;
+    }
+}
