@@ -1,16 +1,25 @@
 .lift, .lift.alignfull{
-    padding: var(--spacing-4-xl) var(--spacing-4-xl);
+   max-width: 400px;
+
     >div>h1, >div>h2, >div>h3, >div>h4, >div>h5, >div>h6{
         margin-top: 0;
     }
 }
 
+.alignfull{
+    //Pixel values to match the space the wave svg takes
+    padding: 30px 1.5rem 72px 1.5rem;
+}
+
 .wp-block-cover__inner-container{
     margin: var(--spacing-m);
+    max-width: 1280px;
     p {
+        margin: 1rem 0;
         padding: var(--spacing-m);
         line-height: 3.5rem;
-        background-color: white;
+        background-color: rgba(255,255,255,0.75);
+        backdrop-filter: blur(8px);
     }
 }
 
