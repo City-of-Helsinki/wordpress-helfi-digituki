@@ -19,9 +19,23 @@
         </div>
         )
     }
+
+	const contentButton = (props) => {
+		return hdsContentButton(
+			props,
+			{
+				className: 'hds-button button',
+				href: props.attributes.buttonUrl,
+				target: '_blank',
+				rel: 'noopener',
+			},
+			hdsExternalLinkIcon()
+		);
+	}
+
     function edit(props) {
         const { attributes, setAttributes } = props
-        const { downloadFile, mapUrl, iframeTitle, buttonText, altText, infoText } = attributes;
+        const { mapUrl, iframeTitle, buttonText, buttonUrl, altText, infoText } = attributes;
 
 		const blockProps = useBlockProps({ 
             className: ''
@@ -54,6 +68,13 @@
                     </PanelRow>
                     <PanelRow>
                         <TextControl
+                            label="Linkki kokoruutunäkymään"
+                            value={ buttonUrl }
+                            onChange={ ( value ) => setAttributes( {buttonUrl: value }) }
+                        />
+                    </PanelRow>
+                    <PanelRow>
+                        <TextControl
                             label="Button text"
                             value={ buttonText }
                             onChange={ ( value ) => setAttributes( {buttonText: value }) }
@@ -73,7 +94,7 @@
                     <div class="mapframe">
                         <iframe title={iframeTitle} src={mapUrl}></iframe>
                     </div>
-                    <a href={mapUrl} target="_blank" rel="noopener" class="button hds-button">{buttonText}</a>
+                    { contentButton(props) }
                 </div>
             </div>
         );
@@ -89,12 +110,14 @@
         
        return (
         <article {...blockProps}>
-            <p class="screen-reader-text">{altText}</p>
-            <MapInfo label={ infoText} />
-            <div class="mapframe">
-                <iframe title={iframeTitle} src={mapUrl}></iframe>
+            <div class="mapcontent" aria-hidden="true">
+                <MapInfo label={ infoText} />
+                <div class="mapframe">
+                    <iframe title={iframeTitle} src={mapUrl}></iframe>
+                </div>
             </div>
-            <a href={mapUrl} target="_blank" rel="noopener" class="button hds-button">{buttonText}</a>
+            { altText && <p class="screen-reader-text">{altText}</p>}
+            { contentButton(props) }
         </article>
         );
 	}
@@ -119,6 +142,9 @@
              buttonText: {
                 type: 'string'
             },
+            buttonUrl: {
+                type: 'string'
+             },
             altText: {
                 type: 'string'
             },
