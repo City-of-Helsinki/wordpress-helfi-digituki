@@ -34,7 +34,6 @@
         if ( ! blockId ) {
             setAttributes( { blockId: clientId } );
         }
-        console.log("bgColor: ", bgColor);
         return (
             <aside {...blockProps}>
                             <InspectorControls>
