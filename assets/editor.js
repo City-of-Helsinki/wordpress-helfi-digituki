@@ -86,7 +86,6 @@ function hdsInfoIcon() {
       });
     }
 
-    console.log("bgColor: ", bgColor);
     return /*#__PURE__*/React.createElement("aside", blockProps, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(SelectControl, {
       label: __('Heading'),
       value: attributes.contentTitleHeading,
@@ -195,7 +194,8 @@ function hdsInfoIcon() {
 (function (wp) {
   const __ = wp.i18n.__;
   const {
-    registerBlockType
+    registerBlockType,
+    registerBlockStyle
   } = wp.blocks;
   const {
     Fragment,
@@ -314,6 +314,10 @@ function hdsInfoIcon() {
     edit: editBanner,
     save: saveBanner
   });
+  registerBlockStyle('digituki/banner', {
+    name: 'light',
+    label: 'Vaalea'
+  });
 })(window.wp);
 
 (function (wp) {
@@ -332,7 +336,8 @@ function hdsInfoIcon() {
   } = wp.blockEditor;
   const {
     ToolbarGroup,
-    Button
+    Button,
+    SelectControl
   } = wp.components;
   const {
     RichText
@@ -371,20 +376,65 @@ function hdsInfoIcon() {
     };
   }
 
-  function contentButton(props) {
-    return hdsContentButton(props, {
-      className: 'content__link hds-button button',
-      href: props.attributes.buttonUrl,
-      target: '_blank',
-      rel: 'noopener'
-    }, hdsExternalLinkIcon());
-  }
+  const LinkButton = props => {
+    const {
+      label,
+      href,
+      type
+    } = props;
+    const iconClass = "content__link hds-button button content__link--" + type;
+
+    if (!href) {
+      return null;
+    }
+
+    if (type == 'external') {
+      return /*#__PURE__*/React.createElement("a", {
+        href: href,
+        className: iconClass,
+        target: "_blank",
+        rel: "noopener"
+      }, label);
+    }
+
+    return /*#__PURE__*/React.createElement("a", {
+      href: href,
+      className: iconClass
+    }, label);
+  };
+
+  const selectControl = (config, props) => {
+    return wp.element.createElement(wp.components.PanelRow, {}, wp.element.createElement(wp.components.SelectControl, {
+      label: config.label,
+      value: config.value,
+      onChange: function (value) {
+        var newAttributes = {};
+        newAttributes[config.attribute] = value;
+        props.setAttributes(newAttributes);
+      },
+      options: config.options
+    }));
+  };
 
   function controls(props) {
+    const {
+      buttonType
+    } = props.attributes;
     return hdsInspectorControls({
       title: wp.i18n.__('Content'),
       initialOpen: true
-    }, hdsButtonTextControl(props), hdsButtonUrlControl(props), createElement('button', {
+    }, hdsButtonTextControl(props), hdsButtonUrlControl(props), selectControl({
+      label: 'Linkin kohde',
+      options: [{
+        label: "Sisäinen",
+        value: 'internal'
+      }, {
+        label: "Ulkoinen",
+        value: 'external'
+      }],
+      attribute: 'buttonType',
+      value: buttonType
+    }, props), createElement('button', {
       onClick: function () {
         props.setAttributes({
           mediaId: 0,
@@ -405,7 +455,10 @@ function hdsInfoIcon() {
       clientId
     } = props;
     const {
-      blockId
+      blockId,
+      buttonUrl,
+      buttonText,
+      buttonType
     } = attributes;
 
     if (!blockId) {
@@ -444,7 +497,11 @@ function hdsInfoIcon() {
         contentText
       }),
       placeholder: __('Content')
-    }), contentButton(props)))));
+    }), /*#__PURE__*/React.createElement(LinkButton, {
+      href: buttonUrl,
+      label: buttonText,
+      type: buttonType
+    })))));
   }
 
   function save(props) {
@@ -454,16 +511,17 @@ function hdsInfoIcon() {
       clientId
     } = props;
     const {
-      blockId
+      blockId,
+      buttonUrl,
+      buttonText,
+      buttonType
     } = attributes;
     const blockTitle = "title-" + blockId;
     const blockDescr = "content-" + blockId;
     const blockProps = useBlockProps.save({
       className: 'digituki-card grid__column'
     });
-    return /*#__PURE__*/React.createElement("div", _extends({}, blockProps, {
-      id: attributes.contentTitle
-    }), /*#__PURE__*/React.createElement("article", {
+    return /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("article", {
       class: "digituki-card__content",
       tabindex: "0",
       "aria-labelledby": blockTitle,
@@ -482,7 +540,11 @@ function hdsInfoIcon() {
       tagName: "p",
       value: attributes.contentText,
       id: blockDescr
-    }), contentButton(props))));
+    }), /*#__PURE__*/React.createElement(LinkButton, {
+      href: buttonUrl,
+      label: buttonText,
+      type: buttonType
+    }))));
   }
 
   registerBlockType('digituki/card', {
@@ -537,6 +599,10 @@ function hdsInfoIcon() {
         type: 'string',
         default: ''
       },
+      buttonType: {
+        type: 'string',
+        default: 'internal'
+      },
       blockId: {
         type: 'string'
       }
@@ -549,7 +615,8 @@ function hdsInfoIcon() {
 (function (wp) {
   const __ = wp.i18n.__;
   const {
-    registerBlockType
+    registerBlockType,
+    registerBlockStyle
   } = wp.blocks;
   const {
     Fragment,
@@ -595,6 +662,10 @@ function hdsInfoIcon() {
     attributes: {},
     edit: edit(),
     save: save()
+  });
+  registerBlockStyle('digituki/card-group', {
+    name: 'light',
+    label: 'Kevyt'
   });
 })(window.wp);
 
