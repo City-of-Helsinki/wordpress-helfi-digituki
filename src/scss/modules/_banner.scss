@@ -23,6 +23,11 @@
 		svg {
 			fill: $black;
 		}
+		a{
+			&:hover, &:focus{
+				color: $black;
+			}
+		}
 	}
 
 	* {
