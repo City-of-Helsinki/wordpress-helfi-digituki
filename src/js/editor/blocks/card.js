@@ -50,12 +50,22 @@
 		const {label, href, type} = props;
 
 		const iconClass = "content__link hds-button button content__link--" + type;
-		if (!href || !label){
+		if (!href){
 			return null;
 		}
+
+		if (type == 'external'){
+				return(
+					<a 	href={href} 
+						className={iconClass} 
+						target="_blank"
+						rel="noopener"
+					>{label}</a>
+				);	
+		}
+
 		return(
 			<a 	href={href} 
-				target={ type == 'external' ? '_blank' : '_self' }
 				className={iconClass} 
 			>{label}</a>
 		)
@@ -88,7 +98,7 @@
             hdsButtonTextControl(props),
             hdsButtonUrlControl(props),
 			selectControl({
-				label: 'Linkin tyyppi',
+				label: 'Linkin kohde',
 				options: [
 					{label: "Sisäinen", value: 'internal'},
 					{label: "Ulkoinen", value: 'external'}
