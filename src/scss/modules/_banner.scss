@@ -1,11 +1,30 @@
 .wp-block-hds-wp-banner-custom, .wp-block-digituki-banner {
-    background-color: var(--color-suomenlinna-medium-light);
-	color: $black;
+	background-color: var(--color-bus);
+	color: $white;
 	margin-bottom: $paragraph-margin-bottom;
-    border-radius: 10px;
 	margin-top: spacing('l');
-	padding: spacing('layout-s');
-	
+	svg {
+		fill: $white;
+	}
+	a{
+		text-decoration: underline;
+		padding: 2px;
+		&:hover, &:focus{
+			color: $white;
+			text-decoration: none;
+
+			outline: 2px solid $white;
+		}
+	}
+	&.is-style-light{
+		border-radius: 10px;
+		background-color: var(--color-suomenlinna-medium-light);
+		color: $black;
+		svg {
+			fill: $black;
+		}
+	}
+
 	* {
 		color: inherit;
 	}
@@ -14,10 +33,9 @@
 	}
 	.content {
 		display: flex;
-		justify-content: space-between;
-		flex-direction: column;
 
 		&--icon-top {
+			padding: 1rem;
 			.content__inner--icon {
 				margin-top: spacing('s');
 				margin-bottom: spacing('l');
@@ -26,16 +44,21 @@
 		}
 
 		&--icon-side {
+			padding: 1rem;
+			align-items: center;
 			.content__inner--icon {
-				margin-left: spacing('s');
-				margin-right: spacing('m');
+				margin-right: spacing('xs');
+				margin-bottom: 0;
 			}
+		}
+
+		&--no-icon{
+			padding: spacing('s');
 		}
 
 		&__inner {
 			&--icon {
 				svg {
-					fill: $black;
 					width: 64px;
 				}
 			}
@@ -55,7 +78,6 @@
 
 				font-size: rem-calc(16);
 				text-align: inherit;
-				align-self: normal;
             }
 
 		}
@@ -82,10 +104,6 @@
 			&:hover {
 				background-color: $black;
 				color: $white;
-
-				svg {
-					fill: $white;
-				}
 			}
 		}
 
@@ -98,23 +116,14 @@
 
 		@include breakpoint('xs') {
 			&__inner--icon {
+
+				margin-bottom: var(--spacing-l);
+			}
+			&--icon-top {
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				margin-bottom: var(--spacing-l);
 			}
-
-			&--icon-side {
-				content {
-					&__inner--icon {
-						align-self: center;
-					}
-				}
-			}
-			
-		}
-
-		@include breakpoint('s') {
 			&--icon-side {
 				content {
 					&__inner--icon {
@@ -130,7 +139,6 @@
 
 			&__inner {
 				&--icon {
-					align-self: center;
 					svg {
 						width: 100px;
 					}

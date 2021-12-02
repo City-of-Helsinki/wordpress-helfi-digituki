@@ -16,3 +16,16 @@
         margin-bottom: -3rem;
     }
 }
+
+.wp-block-hds-wp-banner{
+    &.is-style-light{
+        background: none;
+        color: $black;
+        .content{
+            display: block;
+            &__inner--text{
+                max-width: none;
+            }
+        }
+    }
+}

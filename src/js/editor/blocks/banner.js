@@ -1,7 +1,7 @@
 (function(wp){
 
 	const __ = wp.i18n.__;
-	const { registerBlockType } = wp.blocks;
+	const { registerBlockType, registerBlockStyle } = wp.blocks;
 	const { Fragment, createElement } = wp.element;
 	const { useBlockProps, BlockControls, InnerBlocks } = wp.blockEditor;
 
@@ -114,5 +114,10 @@
 		edit: editBanner,
 		save: saveBanner
 	});
+
+	registerBlockStyle('digituki/banner',{
+		name: 'light',
+		label: 'Vaalea'
+	})
 
 })(window.wp);
