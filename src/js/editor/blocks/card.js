@@ -4,7 +4,7 @@
 	const { registerBlockType } = wp.blocks;
 	const { Fragment, createElement } = wp.element;
 	const { useBlockProps, BlockControls, InnerBlocks } = wp.blockEditor;
-	const { ToolbarGroup, Button } = wp.components;
+	const { ToolbarGroup, Button, SelectControl } = wp.components;
     const { RichText } = wp.blockEditor;
 	function toolbar( props ) {
 
@@ -45,20 +45,41 @@
 			"aria-hidden":"true"
 		});
 	}
-	function contentButton(props) {
-		return hdsContentButton(
-			props,
-			{
-				className: 'content__link hds-button button',
-				href: props.attributes.buttonUrl,
-				target: '_blank',
-				rel: 'noopener',
-			},
-			hdsExternalLinkIcon()
+
+	const LinkButton = (props) => {
+		const {label, href, type} = props;
+
+		const iconClass = "content__link hds-button button content__link--" + type;
+		if (!href || !label){
+			return null;
+		}
+		return(
+			<a 	href={href} 
+				target={ type == 'external' ? '_blank' : '_self' }
+				className={iconClass} 
+			>{label}</a>
+		)
+	}
+	const selectControl = (config, props) => {
+		return wp.element.createElement(
+			wp.components.PanelRow, {},
+			wp.element.createElement(
+				wp.components.SelectControl,
+				{
+					label: config.label,
+					value: config.value,
+					onChange: function(value) {
+						var newAttributes = {};
+						newAttributes[config.attribute] = value;
+						props.setAttributes(newAttributes);
+					},
+					options: config.options
+				}
+			)
 		);
 	}
     function controls(props){
-
+		const {buttonType} = props.attributes;
         return hdsInspectorControls(
             {
                 title: wp.i18n.__('Content'),
@@ -66,6 +87,15 @@
             },
             hdsButtonTextControl(props),
             hdsButtonUrlControl(props),
+			selectControl({
+				label: 'Linkin tyyppi',
+				options: [
+					{label: "Sisäinen", value: 'internal'},
+					{label: "Ulkoinen", value: 'external'}
+				],
+				attribute: 'buttonType',
+				value: buttonType
+			}, props),
             createElement('button',{
                 onClick: function(){
                     props.setAttributes({
@@ -82,7 +112,7 @@
     }
     function edit(props) {
         const { attributes, setAttributes, clientId } = props;
-		const { blockId } = attributes;
+		const { blockId, buttonUrl, buttonText, buttonType } = attributes;
         if ( ! blockId ) {
             setAttributes( { blockId: clientId } );
         }
@@ -120,7 +150,7 @@
                                 placeholder={ __( 'Content' ) } 
                             />
 
-                            {contentButton(props)}
+							<LinkButton href={buttonUrl} label={buttonText} type={buttonType} />
                         </div>
                     </div>
                 </div>
@@ -130,14 +160,14 @@
 
 	function save(props) {
 		const { attributes, setAttributes, clientId } = props;
-        const { blockId } = attributes;
+        const { blockId, buttonUrl, buttonText, buttonType } = attributes;
 		const blockTitle = "title-" + blockId;
 		const blockDescr = "content-" + blockId;
         const blockProps = useBlockProps.save({
             className: 'digituki-card grid__column'
         });
 		return(
-            <div {...blockProps} id={attributes.contentTitle} >
+            <div {...blockProps} >
                 <article class="digituki-card__content" tabindex="0" aria-labelledby={blockTitle} aria-describedby={blockDescr} >
                     <div class="digituki-card__header">
                         <RichText.Content tagName="h2" value={ attributes.contentTitle } id={blockTitle} />
@@ -149,7 +179,7 @@
                     </div>
                     <div class="digituki-card__summary">
                         <RichText.Content tagName="p" value={ attributes.contentText } id={blockDescr} />
-                        {contentButton(props)}
+                        <LinkButton href={buttonUrl} label={buttonText} type={buttonType} />
                     </div>
                 </article>
             </div>
@@ -208,6 +238,10 @@
 			buttonUrl: {
 				type: 'string',
 				default: '',
+			},
+			buttonType: {
+				type: 'string',
+				default: 'internal',
 			},
 			blockId: {
                 type: 'string'

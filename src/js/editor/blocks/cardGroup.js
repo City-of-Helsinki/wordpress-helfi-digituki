@@ -1,7 +1,7 @@
 (function(wp){
 
 	const __ = wp.i18n.__;
-	const { registerBlockType } = wp.blocks;
+	const { registerBlockType, registerBlockStyle } = wp.blocks;
 	const { Fragment, createElement } = wp.element;
 	const { useBlockProps, __experimentalUseInnerBlocksProps, InnerBlocks } = wp.blockEditor;
 
@@ -45,5 +45,10 @@
 		edit: edit(),
 		save: save()
 	});
+
+    registerBlockStyle('digituki/card-group', {
+		name: 'light',
+		label: 'Kevyt'
+    });
 
 })(window.wp);
