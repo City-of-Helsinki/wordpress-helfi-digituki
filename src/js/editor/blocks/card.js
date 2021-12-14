@@ -47,7 +47,7 @@
 	}
 
 	const LinkButton = (props) => {
-		const {label, href, type} = props;
+		const {label, href, type, edit} = props;
 
 		const iconClass = "content__link hds-button button content__link--" + type;
 		if (!href){
@@ -56,7 +56,7 @@
 
 		if (type == 'external'){
 				return(
-					<a 	href={href} 
+					<a 	href={edit != true ? href : undefined } 
 						className={iconClass} 
 						target="_blank"
 						rel="noopener"
@@ -65,7 +65,7 @@
 		}
 
 		return(
-			<a 	href={href} 
+			<a 	href={edit != true ? href : undefined }  
 				className={iconClass} 
 			>{label}</a>
 		)
@@ -100,8 +100,8 @@
 			selectControl({
 				label: 'Linkin kohde',
 				options: [
-					{label: "Sisäinen", value: 'internal'},
-					{label: "Ulkoinen", value: 'external'}
+					{label: "Sisäinen linkki", value: 'internal'},
+					{label: "Ulkoinen linkki", value: 'external'}
 				],
 				attribute: 'buttonType',
 				value: buttonType
@@ -160,7 +160,7 @@
                                 placeholder={ __( 'Content' ) } 
                             />
 
-							<LinkButton href={buttonUrl} label={buttonText} type={buttonType} />
+							<LinkButton href={buttonUrl} label={buttonText} type={buttonType} edit={true} />
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                     </div>
                     <div class="digituki-card__summary">
                         <RichText.Content tagName="p" value={ attributes.contentText } id={blockDescr} />
-                        <LinkButton href={buttonUrl} label={buttonText} type={buttonType} />
+                        <LinkButton href={buttonUrl} label={buttonText} type={buttonType} edit={false} />
                     </div>
                 </article>
             </div>

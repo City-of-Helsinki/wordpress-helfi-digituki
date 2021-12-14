@@ -380,7 +380,8 @@ function hdsInfoIcon() {
     const {
       label,
       href,
-      type
+      type,
+      edit
     } = props;
     const iconClass = "content__link hds-button button content__link--" + type;
 
@@ -390,7 +391,7 @@ function hdsInfoIcon() {
 
     if (type == 'external') {
       return /*#__PURE__*/React.createElement("a", {
-        href: href,
+        href: edit != true ? href : undefined,
         className: iconClass,
         target: "_blank",
         rel: "noopener"
@@ -398,7 +399,7 @@ function hdsInfoIcon() {
     }
 
     return /*#__PURE__*/React.createElement("a", {
-      href: href,
+      href: edit != true ? href : undefined,
       className: iconClass
     }, label);
   };
@@ -426,10 +427,10 @@ function hdsInfoIcon() {
     }, hdsButtonTextControl(props), hdsButtonUrlControl(props), selectControl({
       label: 'Linkin kohde',
       options: [{
-        label: "Sisäinen",
+        label: "Sisäinen linkki",
         value: 'internal'
       }, {
-        label: "Ulkoinen",
+        label: "Ulkoinen linkki",
         value: 'external'
       }],
       attribute: 'buttonType',
@@ -500,7 +501,8 @@ function hdsInfoIcon() {
     }), /*#__PURE__*/React.createElement(LinkButton, {
       href: buttonUrl,
       label: buttonText,
-      type: buttonType
+      type: buttonType,
+      edit: true
     })))));
   }
 
@@ -543,7 +545,8 @@ function hdsInfoIcon() {
     }), /*#__PURE__*/React.createElement(LinkButton, {
       href: buttonUrl,
       label: buttonText,
-      type: buttonType
+      type: buttonType,
+      edit: false
     }))));
   }
 
