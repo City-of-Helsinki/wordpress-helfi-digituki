@@ -1,0 +1,104 @@
+.hero{
+    &.has-background-image{
+        .hero__content{
+            background-color: rgba(255,255,255,0.9);
+            margin-top: -15px;
+        }
+        @include breakpoint('m'){
+            .hero__title{
+                font-size: 1.5rem;
+            }
+            .hero__excerpt{
+                font-size: 1.125rem;
+            }
+        }
+        @include breakpoint('l'){
+            .hero__title{
+                font-size: 2.25rem;
+            }
+            .hero__excerpt{
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+
+body.hero-style-left{
+    .hero{
+        &.has-background-image{
+            @include breakpoint('m'){
+                @include breakpointMax('xl'){
+                    .hero__container{
+                        transform: translate(0,-50%);
+                        left: 0;
+                    }
+                    .hero__content{
+                        width: 41.6666666667%
+                    }
+                }
+            }
+            @include breakpoint('xl') {
+                .hero__container{
+                    width: 1px;
+                    left: 50%;
+                    .hero__content{
+                        position: absolute;
+                        left: -600px;
+                        width: 480px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+body.hero-style-right{
+    .hero{
+        &.has-background-image{
+            @include breakpoint('m'){
+                @include breakpointMax('xl'){
+                    .hero__container{
+                        transform: translate(-50%,-50%);
+                        left: 100%;
+                    }
+                    .hero__content{
+                        width: 50%;
+                    }
+                }
+            }
+            @include breakpoint('l') {
+                .hero__content{
+                    width: 50%;
+                }
+            }
+            @include breakpoint('xl') {
+                .hero__container{
+                    width: 1px;
+                    left: 50%;
+                    .hero__content{
+                        position: absolute;
+                        margin-left: 80px;
+                        width: 520px;
+                    }
+                }  
+            }
+        }
+    }
+}
+
+body.hero-style-hide-content{
+    .hero{
+        .hero__container{
+            clip: rect(1px, 1px, 1px, 1px);
+            clip-path: inset(50%);
+            height: 1px;
+            width: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+        }
+    }
+}
