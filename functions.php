@@ -54,3 +54,24 @@ add_action( 'admin_init', 'digituki_remove_admin_menus' );
 function digituki_remove_admin_menus() {
     remove_menu_page( 'edit-comments.php' );
 }
+
+add_action( 'init', function() {
+	register_post_meta( 'page', 'extra_body_classes', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+	] );
+} );
+
+add_filter( 'body_class','digituki_extra_body_classes' );
+function digituki_extra_body_classes( $classes ) {
+	$extra_classes = get_post_meta( get_the_ID(), 'extra_body_classes', true);
+
+	if (empty($extra_classes))
+		return $classes;
+
+	$extra_classes_array = explode(" ", $extra_classes);
+	$classes = array_merge($classes, $extra_classes_array);
+
+    return $classes;
+}
