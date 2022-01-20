@@ -9,7 +9,6 @@
 
 require_once('functions/palette.php');
 require_once('functions/rest.php');
-require_once('functions/wp-linkedvents.php');
 
 /**
  * Enqueue scripts and styles.
