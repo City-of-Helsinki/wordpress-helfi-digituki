@@ -1003,17 +1003,13 @@ function hdsInfoIcon() {
     __
   } = wp.i18n;
   const {
-    compose
-  } = wp.compose;
-  const {
-    withSelect,
-    withDispatch
+    useSelect,
+    useDispatch
   } = wp.data;
   const {
     PluginDocumentSettingPanel
   } = wp.editPost;
   const {
-    ToggleControl,
     TextControl,
     PanelRow
   } = wp.components;
@@ -1021,11 +1017,17 @@ function hdsInfoIcon() {
     registerPlugin
   } = wp.plugins;
 
-  const DigitukiBodyClasses = ({
-    postType,
-    postMeta,
-    setPostMeta
-  }) => {
+  const DigitukiBodyClasses = () => {
+    const {
+      postMeta
+    } = useSelect(select => {
+      return {
+        postMeta: select('core/editor').getEditedPostAttribute('meta')
+      };
+    });
+    const {
+      editPost
+    } = useDispatch('core/editor', [postMeta.extra_body_classes]);
     return /*#__PURE__*/React.createElement(PluginDocumentSettingPanel, {
       title: __('Advanced'),
       icon: "edit",
@@ -1033,30 +1035,17 @@ function hdsInfoIcon() {
     }, /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(TextControl, {
       label: __('Additional CSS class(es)'),
       value: postMeta.extra_body_classes,
-      onChange: value => setPostMeta({
-        extra_body_classes: value
+      onChange: value => editPost({
+        meta: {
+          extra_body_classes: value
+        }
       })
     })));
   };
 
-  const ComposedDigitukiBodyClasses = compose([withSelect(select => {
-    return {
-      postMeta: select('core/editor').getEditedPostAttribute('meta'),
-      postType: select('core/editor').getCurrentPostType()
-    };
-  }), withDispatch(dispatch => {
-    return {
-      setPostMeta(newMeta) {
-        dispatch('core/editor').editPost({
-          meta: newMeta
-        });
-      }
-
-    };
-  })])(DigitukiBodyClasses);
   registerPlugin('digituki-body-classes-plugin', {
     render() {
-      return /*#__PURE__*/React.createElement(ComposedDigitukiBodyClasses, null);
+      return /*#__PURE__*/React.createElement(DigitukiBodyClasses, null);
     }
 
   });
