@@ -3,7 +3,7 @@
 	const __ = wp.i18n.__;
 	const { registerBlockType, registerBlockStyle } = wp.blocks;
 	const { Fragment, createElement } = wp.element;
-	const { useBlockProps, __experimentalUseInnerBlocksProps, InnerBlocks } = wp.blockEditor;
+	const { useBlockProps, useInnerBlocksProps, InnerBlocks } = wp.blockEditor;
 
     const ALLOWED_BLOCKS = ['digituki/card'];
 
@@ -13,7 +13,7 @@
             const blockProps = useBlockProps( {
                 className: 'digituki-card-group grid xs-up-1 s-up-2 l-up-3'
             } );
-            const innerBlocksProps = __experimentalUseInnerBlocksProps( blockProps, {
+            const innerBlocksProps = useInnerBlocksProps( blockProps, {
                 allowedBlocks: ALLOWED_BLOCKS
             } );
             

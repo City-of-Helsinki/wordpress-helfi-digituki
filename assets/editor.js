@@ -627,7 +627,7 @@ function hdsInfoIcon() {
   } = wp.element;
   const {
     useBlockProps,
-    __experimentalUseInnerBlocksProps,
+    useInnerBlocksProps,
     InnerBlocks
   } = wp.blockEditor;
   const ALLOWED_BLOCKS = ['digituki/card'];
@@ -637,11 +637,9 @@ function hdsInfoIcon() {
       const blockProps = useBlockProps({
         className: 'digituki-card-group grid xs-up-1 s-up-2 l-up-3'
       });
-
-      const innerBlocksProps = __experimentalUseInnerBlocksProps(blockProps, {
+      const innerBlocksProps = useInnerBlocksProps(blockProps, {
         allowedBlocks: ALLOWED_BLOCKS
       });
-
       return /*#__PURE__*/React.createElement("div", innerBlocksProps);
     };
   }
