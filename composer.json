@@ -14,7 +14,7 @@
           }
       ],
       "require": {
-          "city-of-helsinki/wordpress-helfi-helsinkiteema": "*",
-          "city-of-helsinki/wordpress-helfi-hds-wp": "*"
+          "city-of-helsinki/wordpress-helfi-helsinkiteema": ">4.0",
+          "city-of-helsinki/wordpress-helfi-hds-wp": ">1.0"
     }
 }
