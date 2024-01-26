@@ -1,6 +1,8 @@
 {
     "name": "city-of-helsinki/digituki",
     "type": "wordpress-theme",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "repositories": [
           {
               "type": "vcs",
