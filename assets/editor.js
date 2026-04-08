@@ -1,5 +1,4 @@
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 function hdsInfoIcon() {
   const infoCircleFill = hdsIcons('info-circle-fill');
   return wp.element.createElement('svg', {
@@ -11,7 +10,6 @@ function hdsInfoIcon() {
     d: infoCircleFill
   }));
 }
-
 (function (wp) {
   const __ = wp.i18n.__;
   const {
@@ -39,7 +37,6 @@ function hdsInfoIcon() {
     getColorClassName,
     withColors
   } = wp.editor;
-
   function digitukiIconPositionControl(props) {
     let options = [{
       label: "H2",
@@ -64,7 +61,6 @@ function hdsInfoIcon() {
       options: options
     }, props);
   }
-
   function edit(props) {
     const {
       attributes,
@@ -79,13 +75,11 @@ function hdsInfoIcon() {
     const {
       blockId
     } = attributes;
-
     if (!blockId) {
       setAttributes({
         blockId: clientId
       });
     }
-
     return /*#__PURE__*/React.createElement("aside", blockProps, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(SelectControl, {
       label: __('Heading'),
       value: attributes.contentTitleHeading,
@@ -132,7 +126,6 @@ function hdsInfoIcon() {
       placeholder: __('Header')
     }), /*#__PURE__*/React.createElement(InnerBlocks, null)));
   }
-
   function save(props) {
     const {
       attributes,
@@ -145,13 +138,11 @@ function hdsInfoIcon() {
     } = attributes;
     const bgClassName = 'aside-content ' + getColorClassName('background-color', bgColor);
     let saveProps = {};
-
     if (contentTitle) {
       Object.assign(saveProps, {
         'aria-labelledby': blockId
       });
     }
-
     const blockProps = useBlockProps.save(saveProps);
     return /*#__PURE__*/React.createElement("aside", blockProps, /*#__PURE__*/React.createElement("div", {
       className: bgClassName
@@ -161,9 +152,8 @@ function hdsInfoIcon() {
       value: attributes.contentTitle
     }), /*#__PURE__*/React.createElement(InnerBlocks.Content, null)));
   }
-
   registerBlockType('digituki/aside', {
-    apiVersion: 2,
+    apiVersion: 3,
     title: __('Digituki - Sivupalsta'),
     category: 'digituki',
     icon: 'format-gallery',
@@ -190,7 +180,6 @@ function hdsInfoIcon() {
     save
   });
 })(window.wp);
-
 (function (wp) {
   const __ = wp.i18n.__;
   const {
@@ -210,7 +199,6 @@ function hdsInfoIcon() {
   const MY_TEMPLATE = [['core/heading', {
     placeholder: 'Otsikko'
   }]];
-
   const BannerIcon = props => {
     const {
       icon
@@ -220,7 +208,6 @@ function hdsInfoIcon() {
       class: "content__inner content__inner--icon"
     }, icon);
   };
-
   const Banner = props => {
     const {
       icon,
@@ -235,7 +222,6 @@ function hdsInfoIcon() {
       class: "content__inner content__inner--text"
     }, content));
   };
-
   function digitukiIconPositionControl(props) {
     let options = [{
       label: __("Vierellä"),
@@ -251,7 +237,6 @@ function hdsInfoIcon() {
       options: options
     }, props);
   }
-
   function editBanner(props) {
     const {
       attributes,
@@ -275,7 +260,6 @@ function hdsInfoIcon() {
       iconPosition: contentIconPosition ? contentIconPosition : ''
     }));
   }
-
   function saveBanner(props) {
     const {
       attributes
@@ -292,9 +276,8 @@ function hdsInfoIcon() {
       content: /*#__PURE__*/React.createElement(InnerBlocks.Content, null)
     }));
   }
-
   registerBlockType('digituki/banner', {
-    apiVersion: 2,
+    apiVersion: 3,
     title: __('Digituki - Huomioalue'),
     category: 'digituki',
     icon: 'format-gallery',
@@ -319,7 +302,6 @@ function hdsInfoIcon() {
     label: 'Vaalea'
   });
 })(window.wp);
-
 (function (wp) {
   const __ = wp.i18n.__;
   const {
@@ -342,7 +324,6 @@ function hdsInfoIcon() {
   const {
     RichText
   } = wp.blockEditor;
-
   function toolbar(props) {
     return createElement(BlockControls, {
       key: 'controls'
@@ -363,7 +344,6 @@ function hdsInfoIcon() {
       });
     })));
   }
-
   function imageConfig(props) {
     return {
       id: props.attributes.mediaId,
@@ -375,7 +355,6 @@ function hdsInfoIcon() {
       "aria-hidden": "true"
     };
   }
-
   const LinkButton = props => {
     const {
       label,
@@ -384,11 +363,9 @@ function hdsInfoIcon() {
       edit
     } = props;
     const iconClass = "content__link hds-button button content__link--" + type;
-
     if (!href) {
       return null;
     }
-
     if (type == 'external') {
       return /*#__PURE__*/React.createElement("a", {
         href: edit != true ? href : undefined,
@@ -397,13 +374,11 @@ function hdsInfoIcon() {
         rel: "noopener"
       }, label);
     }
-
     return /*#__PURE__*/React.createElement("a", {
       href: edit != true ? href : undefined,
       className: iconClass
     }, label);
   };
-
   const selectControl = (config, props) => {
     return wp.element.createElement(wp.components.PanelRow, {}, wp.element.createElement(wp.components.SelectControl, {
       label: config.label,
@@ -416,7 +391,6 @@ function hdsInfoIcon() {
       options: config.options
     }));
   };
-
   function controls(props) {
     const {
       buttonType
@@ -448,7 +422,6 @@ function hdsInfoIcon() {
       }
     }, __("Posta kuva")));
   }
-
   function edit(props) {
     const {
       attributes,
@@ -461,13 +434,11 @@ function hdsInfoIcon() {
       buttonText,
       buttonType
     } = attributes;
-
     if (!blockId) {
       setAttributes({
         blockId: clientId
       });
     }
-
     const blockProps = useBlockProps({
       className: 'digituki-card grid__column'
     });
@@ -505,7 +476,6 @@ function hdsInfoIcon() {
       edit: true
     })))));
   }
-
   function save(props) {
     const {
       attributes,
@@ -549,9 +519,8 @@ function hdsInfoIcon() {
       edit: false
     }))));
   }
-
   registerBlockType('digituki/card', {
-    apiVersion: 2,
+    apiVersion: 3,
     title: __('Digituki - Kortti'),
     category: 'digituki',
     icon: 'format-gallery',
@@ -614,7 +583,6 @@ function hdsInfoIcon() {
     save
   });
 })(window.wp);
-
 (function (wp) {
   const __ = wp.i18n.__;
   const {
@@ -631,7 +599,6 @@ function hdsInfoIcon() {
     InnerBlocks
   } = wp.blockEditor;
   const ALLOWED_BLOCKS = ['digituki/card'];
-
   function edit() {
     return function (props) {
       const blockProps = useBlockProps({
@@ -643,7 +610,6 @@ function hdsInfoIcon() {
       return /*#__PURE__*/React.createElement("div", innerBlocksProps);
     };
   }
-
   function save() {
     return function (props) {
       return createElement('div', useBlockProps.save({
@@ -651,9 +617,8 @@ function hdsInfoIcon() {
       }), createElement(InnerBlocks.Content));
     };
   }
-
   registerBlockType('digituki/card-group', {
-    apiVersion: 2,
+    apiVersion: 3,
     title: __('Digituki - Korttiryhmä'),
     category: 'digituki',
     icon: 'format-gallery',
@@ -669,7 +634,6 @@ function hdsInfoIcon() {
     label: 'Kevyt'
   });
 })(window.wp);
-
 (function (wp) {
   const allowedEmbedBlocks = [];
   const heading = ['core/heading', {
@@ -685,7 +649,6 @@ function hdsInfoIcon() {
     '50': 'grid_column l-6',
     '33': 'grid_column l-4'
   };
-
   const generateColumnVariationsIcon = function (d) {
     const el = wp.element.createElement;
     const SVG = wp.primitives.SVG;
@@ -700,7 +663,6 @@ function hdsInfoIcon() {
     }));
     return icon;
   };
-
   const templateWide = [];
   const columnVariations = [{
     name: 'hel-grid-column-100',
@@ -795,7 +757,6 @@ function hdsInfoIcon() {
     });
   });
 })(window.wp);
-
 (function (wp) {
   const __ = wp.i18n.__;
   window.addEventListener('load', function () {
@@ -817,7 +778,6 @@ function hdsInfoIcon() {
     });
   });
 })(window.wp);
-
 (function (wp) {
   const __ = wp.i18n.__;
   const {
@@ -842,7 +802,6 @@ function hdsInfoIcon() {
     MediaUpload,
     InspectorControls
   } = wp.blockEditor;
-
   const MapInfo = props => {
     const {
       label
@@ -857,7 +816,6 @@ function hdsInfoIcon() {
       class: "mapinfo__text"
     }, label));
   };
-
   const contentButton = props => {
     return hdsContentButton(props, {
       className: 'hds-button button',
@@ -866,7 +824,6 @@ function hdsInfoIcon() {
       rel: 'noopener'
     }, hdsExternalLinkIcon());
   };
-
   function edit(props) {
     const {
       attributes,
@@ -931,7 +888,6 @@ function hdsInfoIcon() {
       src: mapUrl
     })), contentButton(props)));
   }
-
   function save(props) {
     const {
       attributes,
@@ -961,9 +917,8 @@ function hdsInfoIcon() {
       class: "screen-reader-text"
     }, altText), contentButton(props));
   }
-
   registerBlockType('digituki/palvelukartta', {
-    apiVersion: 2,
+    apiVersion: 3,
     title: __('Digituki - Palvelukartta'),
     category: 'digituki',
     icon: 'format-gallery',
@@ -995,7 +950,6 @@ function hdsInfoIcon() {
     save
   });
 })(window.wp);
-
 (function (wp) {
   const {
     __
@@ -1014,7 +968,6 @@ function hdsInfoIcon() {
   const {
     registerPlugin
   } = wp.plugins;
-
   const DigitukiBodyClasses = () => {
     const {
       postMeta
@@ -1040,11 +993,9 @@ function hdsInfoIcon() {
       })
     })));
   };
-
   registerPlugin('digituki-body-classes-plugin', {
     render() {
       return /*#__PURE__*/React.createElement(DigitukiBodyClasses, null);
     }
-
   });
 })(window.wp);
