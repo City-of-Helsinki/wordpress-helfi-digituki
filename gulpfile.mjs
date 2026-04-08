@@ -1,0 +1,79 @@
+'use strict';
+
+import * as dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import gulp from 'gulp';
+import rename from 'gulp-rename';
+import cleanCSS from 'gulp-clean-css';
+import prefix from 'gulp-autoprefixer';
+import concat from 'gulp-concat';
+import uglify from 'gulp-uglify';
+import babel from 'gulp-babel';
+
+const sass = gulpSass(dartSass);
+const sassOptions = {
+  outputStyle: 'compressed'
+};
+
+const ASSETS = {
+  all:     'assets',
+	styles:  'assets/styles/',
+	scripts: 'assets/scripts/'
+};
+
+const SOURCE = {
+  scripts: [
+    'src/js/frontend/**/*.js'
+  ],
+  scriptsEditor: [
+    'src/js/editor/**/*.js'
+  ],
+  styles: 'src/scss/**/*.scss',
+}
+
+var cssOptions = {
+	level: 2,
+	format: {
+		semicolonAfterLastProperty: true
+	}
+};
+
+gulp.task('scripts', function(){
+  return gulp.src(SOURCE.scripts)
+    .pipe(concat('scripts.js'))
+		.pipe(gulp.dest(ASSETS.all))
+    .pipe(babel({
+      presets: ["@babel/preset-env"]
+    }))
+    .pipe(uglify())
+    .pipe(rename('scripts.min.js'))
+    .pipe(gulp.dest(ASSETS.all));
+});
+
+gulp.task('editor', function(){
+  return gulp.src(SOURCE.scriptsEditor)
+    .pipe(concat('editor.js'))
+		.pipe(gulp.dest(ASSETS.all))
+    .pipe(babel({
+      presets: ['@babel/preset-react']
+    }))
+    .pipe(gulp.dest(ASSETS.all));
+});
+
+gulp.task('styles', function() {
+  return gulp.src(SOURCE.styles)
+    .pipe(sass(sassOptions))
+		.pipe(gulp.dest(ASSETS.all))
+    .pipe(prefix())
+    .pipe(cleanCSS(cssOptions))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest(ASSETS.all))
+});
+
+gulp.task('watch',function() {
+  gulp.watch(SOURCE.styles,gulp.parallel('styles'));
+  gulp.watch(SOURCE.scripts, gulp.parallel('scripts'));
+  gulp.watch(SOURCE.scriptsEditor, gulp.parallel('editor'));
+});
+
+gulp.task('default', gulp.parallel('styles', 'scripts', 'editor'));
