@@ -23,8 +23,8 @@
 	}
 	const Banner = (props) => {
 		const {icon, content, iconPosition} = props;
-		
-		return(	
+
+		return(
 			<div className={`content ${icon ? iconPosition : 'content--no-icon'}`}>
 				<BannerIcon icon={icon} />
 				<div class="content__inner content__inner--text">
@@ -38,7 +38,7 @@
 			{label: __("Vierellä"), value: 'content--icon-side'},
 			{label: __("Yläpuolella"), value: 'content--icon-top'},
 		];
-	
+
 		return hdsSelectControl({
 			label: wp.i18n.__('Icon position'),
 			value: props.attributes.contentIconPosition,
@@ -51,7 +51,7 @@
         const { attributes, setAttributes } = props
         const { contentIconPosition } = attributes;
 
-		const blockProps = useBlockProps({ 
+		const blockProps = useBlockProps({
             className: 'wp-block-hds-wp-banner-custom'
         });
         return (
@@ -66,8 +66,8 @@
 					digitukiIconPositionControl(props)
 				)
 				}
-				<Banner 
-					content={<InnerBlocks allowedBlocks={ALLOWED_BLOCKS} template={ MY_TEMPLATE } />} 
+				<Banner
+					content={<InnerBlocks allowedBlocks={ALLOWED_BLOCKS} template={ MY_TEMPLATE } />}
 					icon={hdsContentIcon(props)}
 					iconPosition={contentIconPosition ? contentIconPosition : ''}
 				/>
@@ -84,17 +84,17 @@
 
 		return (
 			<div {...blockProps}>
-				<Banner 
+				<Banner
 					icon={hdsContentIcon(props)}
 					iconPosition={contentIconPosition ? contentIconPosition : ''}
-					content={<InnerBlocks.Content />} 
+					content={<InnerBlocks.Content />}
 				/>
 			</div>
 		)
 	}
 
 	registerBlockType('digituki/banner', {
-		apiVersion: 2,
+		apiVersion: 3,
 		title: __( 'Digituki - Huomioalue' ),
 		category: 'digituki',
 		icon: 'format-gallery',
