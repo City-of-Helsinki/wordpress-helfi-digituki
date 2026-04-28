@@ -16,7 +16,7 @@
             const innerBlocksProps = useInnerBlocksProps( blockProps, {
                 allowedBlocks: ALLOWED_BLOCKS
             } );
-            
+
 			return (
                 <div { ...innerBlocksProps } />
             )
@@ -33,7 +33,7 @@
 	}
 
 	registerBlockType('digituki/card-group', {
-		apiVersion: 2,
+		apiVersion: 3,
 		title: __( 'Digituki - Korttiryhmä' ),
 		category: 'digituki',
 		icon: 'format-gallery',

@@ -1,11 +1,19 @@
-var gulp        = require('gulp'),
-    sass        = require('gulp-sass')(require('sass')),
-    rename      = require('gulp-rename'),
-		cleanCSS = require('gulp-clean-css');
-    prefix      = require('gulp-autoprefixer'),
-    concat      = require('gulp-concat'),
-    uglify      = require('gulp-uglify'),
-    babel       = require('gulp-babel');
+'use strict';
+
+import * as dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import gulp from 'gulp';
+import rename from 'gulp-rename';
+import cleanCSS from 'gulp-clean-css';
+import prefix from 'gulp-autoprefixer';
+import concat from 'gulp-concat';
+import uglify from 'gulp-uglify';
+import babel from 'gulp-babel';
+
+const sass = gulpSass(dartSass);
+const sassOptions = {
+  outputStyle: 'compressed'
+};
 
 const ASSETS = {
   all:     'assets',
@@ -22,10 +30,6 @@ const SOURCE = {
   ],
   styles: 'src/scss/**/*.scss',
 }
-
-var sassOptions = {
-  outputStyle: 'compressed'
-};
 
 var cssOptions = {
 	level: 2,

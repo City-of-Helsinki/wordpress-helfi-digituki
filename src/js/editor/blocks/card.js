@@ -56,17 +56,17 @@
 
 		if (type == 'external'){
 				return(
-					<a 	href={edit != true ? href : undefined } 
-						className={iconClass} 
+					<a 	href={edit != true ? href : undefined }
+						className={iconClass}
 						target="_blank"
 						rel="noopener"
 					>{label}</a>
-				);	
+				);
 		}
 
 		return(
-			<a 	href={edit != true ? href : undefined }  
-				className={iconClass} 
+			<a 	href={edit != true ? href : undefined }
+				className={iconClass}
 			>{label}</a>
 		)
 	}
@@ -142,7 +142,7 @@
                                 value={ attributes.contentTitle }
                                 allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                 onChange={ ( contentTitle ) => setAttributes( { contentTitle } ) }
-                                placeholder={ __( 'Header' ) } 
+                                placeholder={ __( 'Header' ) }
                             />
                         </div>
                         <div class="digituki-card__image">
@@ -157,7 +157,7 @@
                                 value={ attributes.contentText }
                                 allowedFormats={ [ 'core/bold', 'core/italic', 'core/link'  ] }
                                 onChange={ ( contentText ) => setAttributes( { contentText } ) }
-                                placeholder={ __( 'Content' ) } 
+                                placeholder={ __( 'Content' ) }
                             />
 
 							<LinkButton href={buttonUrl} label={buttonText} type={buttonType} edit={true} />
@@ -197,7 +197,7 @@
 	}
 
 	registerBlockType('digituki/card', {
-		apiVersion: 2,
+		apiVersion: 3,
 		title: __( 'Digituki - Kortti' ),
 		category: 'digituki',
 		icon: 'format-gallery',
