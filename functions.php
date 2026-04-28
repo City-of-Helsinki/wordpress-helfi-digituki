@@ -9,7 +9,6 @@
 
 require_once('functions/palette.php');
 require_once('functions/rest.php');
-require_once('functions/wp-linkedvents.php');
 
 /**
  * Enqueue scripts and styles.
@@ -31,19 +30,31 @@ add_action( 'wp_enqueue_scripts', 'digituki_enqueue_styles' );
 function digituki_enqueue_editor_scripts(){
 	wp_enqueue_script(
 		'editor-scripts',
-			get_stylesheet_directory_uri() . '/assets/editor.js',
-		['wp-i18n', 'wp-blocks', 'wp-dom-ready']
+		get_stylesheet_directory_uri() . '/assets/editor.js',
+		['wp-i18n', 'wp-blocks', 'wp-dom-ready', 'wp-edit-post']
 	);
 }
 add_action('enqueue_block_editor_assets', 'digituki_enqueue_editor_scripts', 10);
 
+add_filter( 'helsinki_wp_allowed_blocks', 'digituki_provide_allowed_blocks' );
+function digituki_provide_allowed_blocks( array $allowed ): array {
+	if ( ! empty( $allowed['common'] ) ) {
+		$allowed['common'] = array_merge( $allowed['common'], array(
+			'digituki/aside' => true,
+			'digituki/banner' => true,
+			'digituki/card' => true,
+			'digituki/card-group' => true,
+			'digituki/palvelukartta' => true,
+		) );
+	}
+
+	return $allowed;
+}
+
 function digituki_generate_child_setup() {
     add_theme_support('editor-styles');
     add_editor_style('assets/editor.css');
-	// Editor Color Palette
 
-	add_theme_support( 'editor-color-palette', digituki_palette() );
-	
 	remove_filter('render_block', 'helsinki_alignfull_block_hds_customizations');
 }
 add_action('after_setup_theme', 'digituki_generate_child_setup');
@@ -54,4 +65,25 @@ add_action('after_setup_theme', 'digituki_generate_child_setup');
 add_action( 'admin_init', 'digituki_remove_admin_menus' );
 function digituki_remove_admin_menus() {
     remove_menu_page( 'edit-comments.php' );
+}
+
+add_action( 'init', function() {
+	register_post_meta( 'page', 'extra_body_classes', [
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+	] );
+} );
+
+add_filter( 'body_class','digituki_extra_body_classes' );
+function digituki_extra_body_classes( $classes ) {
+	$extra_classes = get_post_meta( get_the_ID(), 'extra_body_classes', true);
+
+	if (empty($extra_classes))
+		return $classes;
+
+	$extra_classes_array = explode(" ", $extra_classes);
+	$classes = array_merge($classes, $extra_classes_array);
+
+    return $classes;
 }

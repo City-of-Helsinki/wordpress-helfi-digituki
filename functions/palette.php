@@ -1,51 +1,44 @@
 <?php
+
 /**
   * Child Theme Palette setup
   */
-  add_filter('helsinki_default_scheme', function($name){
+
+add_filter( 'helsinki_default_scheme', 'digituki_palette_name' , 11 );
+
+function digituki_palette_name(): string {
 	return 'digituki';
-}, 11);
+}
 
-function digituki_colors() {
+function digituki_colors(): array {
 	return array(
-		'digituki' => '#BDD4EE',
-		'digituki-light' => '#EDF4FB',
-		'digituki-medium-light' => '#FFE584',
-		'digituki-dark' => '#0072c6',
-        'digituki-accent' => '#ffdbeb',
+		'primary' => array(
+			'color' => '#BDD4EE',
+			'light' => '#EDF4FB',
+			'medium' => '#FFE584',
+			'dark' => '#0072c6',
+			'content' => '#1a1a1a',
+			'content-secondary' => '#ffffff',
+		),
+		'secondary' => '#EDF4FB',
+		'secondary-content' => '#1a1a1a',
+		'accent' => '#ffdbeb',
 	);
 }
 
-function digituki_palette(){
-	$palette = helsinki_scheme_editor_palette();
-	$digituki_colors = digituki_colors();
-	$additional_colors = [
-		["name" => __("Medium light"), "slug" => "medium-light", "color" => $digituki_colors["digituki-medium-light"]],
-        ["name" => __("Accent"), "slug" => "accent", "color" => $digituki_colors["digituki-accent"]]	
-	];
-
-    return array_merge($palette, $additional_colors);
-}
-
-add_filter('helsinki_colors', function($colors){
-	return array_merge(
-		$colors,
-		digituki_colors()
-	);
+add_filter( 'helsinki_colors', function( $colors ): array {
+	return array_merge( $colors, array(
+		digituki_palette_name() => digituki_colors(),
+	) );
 }, 11);
 
 add_filter('helsinki_scheme_root_styles_colors', function($colors, $scheme){
-	if ( 'digituki' !== $scheme ) {
-		return $colors;
+	if ( digituki_palette_name() === $scheme ) {
+		add_filter( 'helsinki_scheme_root_styles_use_hex', '__return_true' );
+
+		$custom = digituki_colors();
+		$colors['--primary-color-accent'] = $custom['accent'];
 	}
 
-	add_filter('helsinki_scheme_root_styles_use_hex', '__return_true');
-	$custom = digituki_colors();
-	return array(
-		'--primary-color' => $custom['digituki'],
-		'--primary-color-light' => $custom['digituki-light'],
-		'--primary-color-medium' => $custom['digituki-medium-light'],
-		'--primary-color-dark' => $custom['digituki-dark'],
-        '--primary-color-accent' => $custom['digituki-accent'],
-	);
+	return $colors;
 }, 11, 2);

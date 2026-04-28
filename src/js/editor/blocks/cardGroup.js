@@ -1,9 +1,9 @@
 (function(wp){
 
 	const __ = wp.i18n.__;
-	const { registerBlockType } = wp.blocks;
+	const { registerBlockType, registerBlockStyle } = wp.blocks;
 	const { Fragment, createElement } = wp.element;
-	const { useBlockProps, __experimentalUseInnerBlocksProps, InnerBlocks } = wp.blockEditor;
+	const { useBlockProps, useInnerBlocksProps, InnerBlocks } = wp.blockEditor;
 
     const ALLOWED_BLOCKS = ['digituki/card'];
 
@@ -13,10 +13,10 @@
             const blockProps = useBlockProps( {
                 className: 'digituki-card-group grid xs-up-1 s-up-2 l-up-3'
             } );
-            const innerBlocksProps = __experimentalUseInnerBlocksProps( blockProps, {
+            const innerBlocksProps = useInnerBlocksProps( blockProps, {
                 allowedBlocks: ALLOWED_BLOCKS
             } );
-            
+
 			return (
                 <div { ...innerBlocksProps } />
             )
@@ -33,7 +33,7 @@
 	}
 
 	registerBlockType('digituki/card-group', {
-		apiVersion: 2,
+		apiVersion: 3,
 		title: __( 'Digituki - Korttiryhmä' ),
 		category: 'digituki',
 		icon: 'format-gallery',
@@ -45,5 +45,10 @@
 		edit: edit(),
 		save: save()
 	});
+
+    registerBlockStyle('digituki/card-group', {
+		name: 'light',
+		label: 'Kevyt'
+    });
 
 })(window.wp);

@@ -1,8 +1,8 @@
 {
     "name": "city-of-helsinki/digituki",
     "type": "wordpress-theme",
-    "version": "master",
-    "authors": [],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "repositories": [
           {
               "type": "vcs",
@@ -14,7 +14,6 @@
           }
       ],
       "require": {
-          "city-of-helsinki/wordpress-helfi-helsinkiteema": "*",
-          "city-of-helsinki/wordpress-helfi-hds-wp": "*"
+          "city-of-helsinki/wordpress-helfi-helsinkiteema": ">=4.0"
     }
 }

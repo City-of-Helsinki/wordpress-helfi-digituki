@@ -37,7 +37,7 @@
         const { attributes, setAttributes } = props
         const { mapUrl, iframeTitle, buttonText, buttonUrl, altText, infoText } = attributes;
 
-		const blockProps = useBlockProps({ 
+		const blockProps = useBlockProps({
             className: ''
         });
         return (
@@ -107,7 +107,7 @@
         const blockProps = useBlockProps.save({
             className: 'palvelukartta'
         });
-        
+
        return (
         <article {...blockProps}>
             <div class="mapcontent" aria-hidden="true">
@@ -123,7 +123,7 @@
 	}
 
 	registerBlockType('digituki/palvelukartta', {
-		apiVersion: 2,
+		apiVersion: 3,
 		title: __( 'Digituki - Palvelukartta' ),
 		category: 'digituki',
 		icon: 'format-gallery',

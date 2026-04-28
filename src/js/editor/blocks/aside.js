@@ -16,7 +16,7 @@
             {label: "H5", value: 'h5'},
             {label: "H6", value: 'h6'},
 		];
-	
+
 		return hdsSelectControl({
 			label: wp.i18n.__('Heading'),
 			value: props.attributes.contentIconPosition,
@@ -27,14 +27,13 @@
 
     function edit(props) {
         const { attributes, setAttributes, clientId, setBgColor, bgColor } = props;
-		const blockProps = useBlockProps({ 
+		const blockProps = useBlockProps({
             className: ''
         });
         const { blockId } = attributes;
         if ( ! blockId ) {
             setAttributes( { blockId: clientId } );
         }
-        console.log("bgColor: ", bgColor);
         return (
             <aside {...blockProps}>
                             <InspectorControls>
@@ -54,7 +53,7 @@
                                 </PanelBody>
                                 <PanelColorSettings
                                     title={__('Taustaväri')}
-                                    colorSettings= { [ 
+                                    colorSettings= { [
                                         {
                                         value: bgColor.color,
                                         onChange: setBgColor,
@@ -63,7 +62,7 @@
                                     ] }
                                 />
                             </InspectorControls>
-                            <div class="aside-content" 
+                            <div class="aside-content"
                                     style={ {
 			                            backgroundColor: bgColor.color,
 			                        } }
@@ -75,7 +74,7 @@
                                     withoutInteractiveFormatting
                                     allowedFormats={ [] }
                                     onChange={ ( contentTitle ) => setAttributes( { contentTitle } ) }
-                                    placeholder={ __( 'Header' ) } 
+                                    placeholder={ __( 'Header' ) }
                                 />
                                 <InnerBlocks />
                             </div>
@@ -88,14 +87,14 @@
         const { blockId, contentTitle, bgColor } = attributes;
 
         const bgClassName = 'aside-content ' + getColorClassName( 'background-color', bgColor);
-        
+
         let saveProps = {};
 
         if ( contentTitle ){
             Object.assign(saveProps, {'aria-labelledby': blockId});
         }
         const blockProps = useBlockProps.save(saveProps);
-        
+
        return (
             <aside {...blockProps}>
                 <div className={bgClassName}>
@@ -107,7 +106,7 @@
 	}
 
 	registerBlockType('digituki/aside', {
-		apiVersion: 2,
+		apiVersion: 3,
 		title: __( 'Digituki - Sivupalsta' ),
 		category: 'digituki',
 		icon: 'format-gallery',
@@ -130,7 +129,7 @@
                 type: 'string',
                 default: 'medium-light'
             }
-            
+
 		},
 		edit: withColors('bgColor')(edit),
 		save
